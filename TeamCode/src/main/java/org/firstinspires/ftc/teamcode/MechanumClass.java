@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import static java.lang.Thread.sleep;
 
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -15,6 +17,8 @@ public class MechanumClass {
     DcMotor frontRight;
     DcMotor backLeft;
     DcMotor backRight;
+    DcMotor armMotor;
+    Servo handServo;
 
     public double getEncoderVal(String encoder) {
         //0 = front left motor
@@ -38,6 +42,10 @@ public class MechanumClass {
         backLeft = hwMap.get(DcMotor.class, "BL_Motor");
         backRight = hwMap.get(DcMotor.class, "BR_Motor");
 
+        armMotor = hwMap.get(DcMotor.class, "Arm_Motor");
+
+        handServo = hwMap.get(Servo.class, "Hand_Servo");
+
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
 
@@ -46,18 +54,69 @@ public class MechanumClass {
         backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        if(!autoMode)
+        {
+            frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
         //frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 
-    public void teleOP(double power, double pivot, double vertical, double horizontal) {
+    public void teleOP(double power, double pivot, double vertical, double horizontal, double arm, boolean open, boolean close, AprilTagClass aTag, boolean bumperPressed) {
+
+        //Placeholder because it gets grumpy
+        armMotor.setTargetPosition(300);
 
         frontLeft.setPower(-power * pivot + (power * (-vertical - horizontal)));
         frontRight.setPower(-power * pivot + (power * (-vertical + horizontal)));
         backLeft.setPower(power * pivot + (power * (-vertical + horizontal)));
         backRight.setPower(power * pivot + (power * (-vertical - horizontal)));
+
+        if(arm == 0)
+        {
+            int armPosition = armMotor.getCurrentPosition();
+            armMotor.setTargetPosition(armPosition);
+
+            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            armMotor.setPower(0.1);
+        }
+        else
+        {
+            armMotor.setPower(arm);
+        }
+
+        if(bumperPressed)
+        {
+            horizontal = aTag.returnAprilTagValues("Distance")-15;
+            pivot = aTag.returnAprilTagValues("Yaw");
+            vertical = aTag.returnAprilTagValues("Heading");
+
+            power = .15;
+
+            frontLeft.setPower(-power * pivot + (power * (-vertical - horizontal)));
+            frontRight.setPower(-power * pivot + (power * (-vertical + horizontal)));
+            backLeft.setPower(power * pivot + (power * (-vertical + horizontal)));
+            backRight.setPower(power * pivot + (power * (-vertical - horizontal)));
+        }
+        /*
+        if(open)
+        {
+            handServo.setPosition(90);
+        }
+        if(close)
+        {
+            handServo.setPosition(0);
+        }
+
+         */
     }
 
     public void drive(double angle, double power, long delay, int position, boolean run) throws InterruptedException {

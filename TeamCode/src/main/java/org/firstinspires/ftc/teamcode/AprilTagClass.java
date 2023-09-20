@@ -132,10 +132,14 @@ public class AprilTagClass {
 
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
+                if(value.equalsIgnoreCase("Name"))
+                {
+                    return detection.id;
+                }
                 if (value.equalsIgnoreCase("Distance")) {
                     return detection.ftcPose.range;
                 }
-                if(value.equalsIgnoreCase("Angle"))
+                if(value.equalsIgnoreCase("Yaw"))
                 {
                     return detection.ftcPose.yaw;
                 }
@@ -143,6 +147,15 @@ public class AprilTagClass {
                 {
                     return detection.ftcPose.x;
                 }
+                if (value.equalsIgnoreCase("Heading")
+                ) {
+
+                    return detection.ftcPose.bearing;
+                }
+            }
+            else
+            {
+                return 0;
             }
         }
             // Add "key" information to telemetry
