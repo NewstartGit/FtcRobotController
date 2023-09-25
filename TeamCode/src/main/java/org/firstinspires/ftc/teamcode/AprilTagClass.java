@@ -132,6 +132,10 @@ public class AprilTagClass {
 
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
+                if(value.equalsIgnoreCase("Detected"))
+                {
+                    return -1;
+                }
                 if(value.equalsIgnoreCase("Name"))
                 {
                     return detection.id;

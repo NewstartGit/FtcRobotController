@@ -93,13 +93,16 @@ public class MechanumClass {
             armMotor.setPower(arm);
         }
 
-        if(bumperPressed)
+        if(bumperPressed && aTag.returnAprilTagValues("Detected") == -1 && aTag.returnAprilTagValues("Distance") > 30)
         {
-            horizontal = aTag.returnAprilTagValues("Distance")-15;
-            pivot = aTag.returnAprilTagValues("Yaw");
-            vertical = aTag.returnAprilTagValues("Heading");
+            double distancePower = .3;
+            double pivotPower = 1;
+            double strafePower = 1;
+            horizontal = -aTag.returnAprilTagValues("Distance") * distancePower;
+            pivot = aTag.returnAprilTagValues("Yaw") * pivotPower;
+            vertical = aTag.returnAprilTagValues("Heading") * strafePower;
 
-            power = .15;
+            power = .1;
 
             frontLeft.setPower(-power * pivot + (power * (-vertical - horizontal)));
             frontRight.setPower(-power * pivot + (power * (-vertical + horizontal)));
@@ -122,7 +125,7 @@ public class MechanumClass {
     public void drive(double angle, double power, long delay, int position, boolean run) throws InterruptedException {
         if (run) {
             // converts the degrees that is inputted to radians, adjusted to equal unit circle
-            double radAngle = Math.toRadians(angle);
+            double radAngle = Math.toRadians(-angle + 90);
             // calculate motor power
             double ADPower = power * Math.sqrt(2) * 0.5 * (Math.sin(radAngle) + Math.cos(radAngle));
             double BCPower = power * Math.sqrt(2) * 0.5 * (Math.sin(radAngle) - Math.cos(radAngle));
@@ -228,110 +231,59 @@ public class MechanumClass {
         backLeft.setDirection(DcMotor.Direction.FORWARD);
     }
 
-    public boolean alignWithAprilTag(double power, int distance, AprilTagClass aTag) {
+    public boolean alignWithAprilTag(double power, int distance, AprilTagClass aTag) throws InterruptedException {
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.REVERSE);
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
 
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         double tagDistance = aTag.returnAprilTagValues("Distance");
         double angle = aTag.returnAprilTagValues("Angle");
-        double xDistance = aTag.returnAprilTagValues("X Value");
+        double xDistance = aTag.returnAprilTagValues("Heading");
+        double tolerance = 0.5;
+        double powerMultiplier = 1.5;
 
-        if(tagDistance > distance) {
-            frontLeft.setPower(power);
-            frontRight.setPower(power);
-            backLeft.setPower(power);
-            backRight.setPower(power);
+        if(aTag.returnAprilTagValues("Detected") == -1)
+        {
+
+            if(xDistance > 0 + tolerance) //if over tolerance
+            {
+                frontLeft.setPower(-power * powerMultiplier);
+                frontRight.setPower(power * powerMultiplier);
+                backLeft.setPower(power * powerMultiplier);
+                backRight.setPower(-power * powerMultiplier);
+            }
+            if(xDistance < 0 - tolerance) // if under tolerance
+            {
+                frontLeft.setPower(power * powerMultiplier);
+                frontRight.setPower(-power * powerMultiplier);
+                backLeft.setPower(-power * powerMultiplier);
+                backRight.setPower(power * powerMultiplier);
+            }
+
+            if(tagDistance > distance) {
+                frontLeft.setPower(power);
+                frontRight.setPower(power);
+                backLeft.setPower(power);
+                backRight.setPower(power);
+            }
+            return true;
+
         }
+        
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+
+
         return false;
-    }
 
-
-    public boolean strafeAroundAprilTag(double speed, int distance, AprilTagClass aTag)
-    {
-        double tagDistance = aTag.returnAprilTagValues("Distance");
-        double angle = aTag.returnAprilTagValues("Angle");
-        double xDistance = aTag.returnAprilTagValues("X Value");
-
-        //Get angle and strafing down first, then distance
-        if(xDistance < 0) // Strafe right
-        {
-            frontLeft.setPower(speed);
-            frontRight.setPower(-speed);
-            backLeft.setPower(-speed);
-            backRight.setPower(speed);
-            return true;
-        }
-        else if(xDistance > 0) // Strafe left
-        {
-            frontLeft.setPower(-speed);
-            frontRight.setPower(speed);
-            backLeft.setPower(speed);
-            backRight.setPower(-speed);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
-        /*
-        if(tagDistance > distance)
-        {
-            frontLeft.setPower(speed);
-            frontRight.setPower(-speed);
-            backLeft.setPower(-speed);
-            backRight.setPower(speed);
-            if(xDistance > 0) // Strafe right
-            {
-                frontLeft.setPower(speed);
-                frontRight.setPower(-speed);
-                backLeft.setPower(-speed);
-                backRight.setPower(speed);
-            }
-            else if(xDistance < 0) // Strafe left
-            {
-                frontLeft.setPower(-speed);
-                frontRight.setPower(speed);
-                backLeft.setPower(speed);
-                backRight.setPower(-speed);
-            }
-            else
-            {
-                return false;
-            }
-            if(angle > 0)
-            {
-                frontLeft.setPower(0);
-                frontRight.setPower(-speed*2);
-                backLeft.setPower(0);
-                backRight.setPower(speed*2);
-                return true;
-            }
-            else if(angle < 0)
-            {
-                frontLeft.setPower(speed*2);
-                frontRight.setPower(0);
-                backLeft.setPower(-speed*2);
-                backRight.setPower(0);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            frontLeft.setPower(0);
-            frontRight.setPower(0);
-            backLeft.setPower(0);
-            backRight.setPower(0);
-            return false;
-        }
-
-         */
     }
 
     public boolean driveForwardUntil(double speed,int position,AprilTagClass aTag) throws InterruptedException

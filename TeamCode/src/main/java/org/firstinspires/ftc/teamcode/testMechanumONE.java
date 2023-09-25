@@ -20,7 +20,20 @@ public class testMechanumONE extends LinearOpMode
 
         if(opModeIsActive())
         {
-            mc.drive(0,.5,3000,3000,true);
+            boolean driveBool = true;
+
+            //mc.alignWithAprilTag(.25,30,aTag);
+            //mc.drive(90,.5,3000,3000,true);
+            //mc.rotate(90,.25,3000,imu);
+
+            while(opModeIsActive())
+            {
+                if(driveBool)
+                {
+                    driveBool = mc.alignWithAprilTag(.25,20,aTag);
+                }
+            }
+            //mc.drive(90,.5,3000,1000,true);
             /*
             mc.rotate(90,.25,5000, imu);
             mc.drive(0,.5,3000,3000,true);
