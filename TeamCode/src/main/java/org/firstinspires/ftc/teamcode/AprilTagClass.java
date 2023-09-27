@@ -132,6 +132,18 @@ public class AprilTagClass {
 
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
+                if(value.equalsIgnoreCase("1") && detection.id == 1)
+                {
+                    return 1;
+                }
+                else if(value.equalsIgnoreCase("2") && detection.id == 2)
+                {
+                    return 2;
+                }
+                else if(value.equalsIgnoreCase("3") && detection.id == 3)
+                {
+                    return 3;
+                }
                 if(value.equalsIgnoreCase("Detected"))
                 {
                     return -1;

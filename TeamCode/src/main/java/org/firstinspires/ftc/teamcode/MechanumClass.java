@@ -231,7 +231,7 @@ public class MechanumClass {
         backLeft.setDirection(DcMotor.Direction.FORWARD);
     }
 
-    public boolean alignWithAprilTag(double power, int distance, AprilTagClass aTag) throws InterruptedException {
+    public boolean alignWithAprilTag(double power, int distance, AprilTagClass aTag, int tagID) throws InterruptedException {
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.REVERSE);
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
@@ -242,14 +242,20 @@ public class MechanumClass {
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        double tagDistance = aTag.returnAprilTagValues("Distance");
-        double angle = aTag.returnAprilTagValues("Angle");
-        double xDistance = aTag.returnAprilTagValues("Heading");
-        double tolerance = 0.5;
-        double powerMultiplier = 1.5;
 
-        if(aTag.returnAprilTagValues("Detected") == -1)
+        double tagDistance;// = aTag.returnAprilTagValues("Distance");
+        double angle;// = aTag.returnAprilTagValues("Angle");
+        double xDistance;// = aTag.returnAprilTagValues("Heading");
+        double tolerance = 2;
+        double powerMultiplier = .5;
+        double rotateMultiplier = 20;
+        boolean facingTowards = false;
+
+        if(aTag.returnAprilTagValues("Detected") == -1 && aTag.returnAprilTagValues("1") == 1)
         {
+            tagDistance = aTag.returnAprilTagValues("Distance");
+            angle = aTag.returnAprilTagValues("Angle");
+            xDistance = aTag.returnAprilTagValues("Heading");
 
             if(xDistance > 0 + tolerance) //if over tolerance
             {
@@ -258,31 +264,63 @@ public class MechanumClass {
                 backLeft.setPower(power * powerMultiplier);
                 backRight.setPower(-power * powerMultiplier);
             }
-            if(xDistance < 0 - tolerance) // if under tolerance
+            else if(xDistance < 0 - tolerance) // if under tolerance
             {
                 frontLeft.setPower(power * powerMultiplier);
                 frontRight.setPower(-power * powerMultiplier);
                 backLeft.setPower(-power * powerMultiplier);
                 backRight.setPower(power * powerMultiplier);
             }
-
-            if(tagDistance > distance) {
-                frontLeft.setPower(power);
-                frontRight.setPower(power);
-                backLeft.setPower(power);
-                backRight.setPower(power);
+            else
+            {
+                if(tagDistance > distance) {
+                    frontLeft.setPower(power);
+                    frontRight.setPower(power);
+                    backLeft.setPower(power);
+                    backRight.setPower(power);
+                }
+                else
+                {
+                    frontLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backLeft.setPower(0);
+                    backRight.setPower(0);
+                    return false;
+                }
             }
+            /*
+            if(angle > 0 + tolerance * 2)//turn right
+            {
+                frontLeft.setPower(power * rotateMultiplier);
+                frontRight.setPower(-power * rotateMultiplier);
+                backLeft.setPower(power * rotateMultiplier);
+                backRight.setPower(-power * rotateMultiplier);
+            }
+            else if(angle < 0 - tolerance * 2)
+            {
+                frontLeft.setPower(-power * rotateMultiplier);
+                frontRight.setPower(power * rotateMultiplier);
+                backLeft.setPower(-power * rotateMultiplier);
+                backRight.setPower(power * rotateMultiplier);
+            }
+            else
+            {
+                facingTowards = true;
+            }
+
+            */
             return true;
 
         }
-        
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
-        backLeft.setPower(0);
-        backRight.setPower(0);
+        else
+        {
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
+            backLeft.setPower(0);
+            backRight.setPower(0);
 
-
-        return false;
+            return true;
+        }
 
     }
 
