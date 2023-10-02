@@ -124,6 +124,11 @@ public class MechanumClass {
 
     public void drive(double angle, double power, long delay, int position, boolean run) throws InterruptedException {
         if (run) {
+            frontRight.setDirection(DcMotor.Direction.REVERSE);
+            frontLeft.setDirection(DcMotor.Direction.FORWARD);
+            backRight.setDirection(DcMotor.Direction.REVERSE);
+            backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+
             // converts the degrees that is inputted to radians, adjusted to equal unit circle
             double radAngle = Math.toRadians(-angle + 90);
             // calculate motor power
@@ -247,7 +252,7 @@ public class MechanumClass {
         double angle;// = aTag.returnAprilTagValues("Angle");
         double xDistance;// = aTag.returnAprilTagValues("Heading");
         double tolerance = 2;
-        double powerMultiplier = .5;
+        double powerMultiplier = .75;
         double rotateMultiplier = 20;
         boolean facingTowards = false;
 
