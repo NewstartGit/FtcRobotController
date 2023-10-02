@@ -24,9 +24,9 @@ public class testMechanumONE extends LinearOpMode
 
             //mc.alignWithAprilTag(.25,30,aTag);
 
-            mc.drive(90,.5,3000,3000,true);
-            mc.rotate(90,.25,3000,imu);
-            mc.drive(90,.5,3000,1500,true);
+            //mc.drive(90,.5,3000,3000,true);
+            //mc.rotate(90,.25,3000,imu);
+            //mc.drive(90,.5,3000,1500,true);
 
 
 
@@ -43,10 +43,42 @@ public class testMechanumONE extends LinearOpMode
                 }
                 //mc.drive(270,0.25,1000,1000,true);
             }
+            driveBool = true;
 
-            mc.drive(270,.5,6000,4000,true);
+            mc.drive(270,.5,6000,3000,true);
 
+            while(opModeIsActive())
+            {
+                if(driveBool)
+                {
+                    driveBool = mc.alignWithAprilTag(.25,10,aTag,2);
+                }
+                else
+                {
+                    break;
+                }
+                //mc.drive(270,0.25,1000,1000,true);
+            }
 
+            driveBool = true;
+
+            mc.drive(270,.5,6000,3000,true);
+
+            while(opModeIsActive())
+            {
+                if(driveBool)
+                {
+                    driveBool = mc.alignWithAprilTag(.25,10,aTag,1);
+                }
+                else
+                {
+                    break;
+                }
+                //mc.drive(270,0.25,1000,1000,true);
+            }
+            driveBool = true;
+
+            mc.drive(270,.5,6000,3000,true);
 
             //mc.drive(90,.5,3000,1000,true);
             /*
@@ -79,5 +111,6 @@ public class testMechanumONE extends LinearOpMode
 
 
         }
+
     }
 }

@@ -92,7 +92,7 @@ public class MechanumClass {
         {
             armMotor.setPower(arm);
         }
-
+        /*
         if(bumperPressed && aTag.returnAprilTagValues("Detected") == -1 && aTag.returnAprilTagValues("Distance") > 30)
         {
             double distancePower = .3;
@@ -256,11 +256,11 @@ public class MechanumClass {
         double rotateMultiplier = 20;
         boolean facingTowards = false;
 
-        if(aTag.returnAprilTagValues("Detected") == -1 && aTag.returnAprilTagValues("1") == 1)
+        if(aTag.returnAprilTagValues("Detected",tagID) == -1) // && aTag.returnAprilTagValues("1") == 1;
         {
-            tagDistance = aTag.returnAprilTagValues("Distance");
-            angle = aTag.returnAprilTagValues("Angle");
-            xDistance = aTag.returnAprilTagValues("Heading");
+            tagDistance = aTag.returnAprilTagValues("Distance",tagID);
+            angle = aTag.returnAprilTagValues("Angle",tagID);
+            xDistance = aTag.returnAprilTagValues("Heading",tagID);
 
             if(xDistance > 0 + tolerance) //if over tolerance
             {
@@ -293,27 +293,7 @@ public class MechanumClass {
                     return false;
                 }
             }
-            /*
-            if(angle > 0 + tolerance * 2)//turn right
-            {
-                frontLeft.setPower(power * rotateMultiplier);
-                frontRight.setPower(-power * rotateMultiplier);
-                backLeft.setPower(power * rotateMultiplier);
-                backRight.setPower(-power * rotateMultiplier);
-            }
-            else if(angle < 0 - tolerance * 2)
-            {
-                frontLeft.setPower(-power * rotateMultiplier);
-                frontRight.setPower(power * rotateMultiplier);
-                backLeft.setPower(-power * rotateMultiplier);
-                backRight.setPower(power * rotateMultiplier);
-            }
-            else
-            {
-                facingTowards = true;
-            }
 
-            */
             return true;
 
         }
@@ -329,52 +309,6 @@ public class MechanumClass {
 
     }
 
-    public boolean driveForwardUntil(double speed,int position,AprilTagClass aTag) throws InterruptedException
-    {
-        double distance = aTag.returnAprilTagValues("Distance");
-        double angle = aTag.returnAprilTagValues("Angle");
-        if(distance > position)
-        {
-            frontLeft.setPower(speed);
-            frontRight.setPower(-speed);
-            backLeft.setPower(-speed);
-            backRight.setPower(speed);
-
-        }
-        else if(distance <= position)
-        {
-            frontLeft.setPower(0);
-            frontRight.setPower(0);
-            backLeft.setPower(0);
-            backRight.setPower(0);
-
-        }
-        if(angle > 0)
-        {
-            frontLeft.setPower(0);
-            frontRight.setPower(-speed*2);
-            backLeft.setPower(0);
-            backRight.setPower(speed*2);
-            return true;
-        }
-        else if(angle < 0)
-        {
-            frontLeft.setPower(speed*2);
-            frontRight.setPower(0);
-            backLeft.setPower(-speed*2);
-            backRight.setPower(0);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
-
-        //frontRight.setPower(-speed);
-
-        //Thread.sleep(10000);
-    }
 
 
 }

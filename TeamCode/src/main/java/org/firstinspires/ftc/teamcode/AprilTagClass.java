@@ -127,11 +127,11 @@ public class AprilTagClass {
     /**
      * Function to add telemetry about AprilTag detections.
      */
-    public double returnAprilTagValues(String value) {
+    public double returnAprilTagValues(String value, int inputID) {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
 
         for (AprilTagDetection detection : currentDetections) {
-            if (detection.metadata != null) {
+            if (detection.metadata != null && detection.id == inputID) {
                 if(value.equalsIgnoreCase("1") && detection.id == 1)
                 {
                     return 1;
@@ -171,7 +171,7 @@ public class AprilTagClass {
             }
             else
             {
-                return 0;
+                //return 0;
             }
         }
             // Add "key" information to telemetry

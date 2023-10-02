@@ -77,7 +77,7 @@ public class MechanumTeleOp extends LinearOpMode
             telemetry.addData("Back Left: ", -power * pivot + (power *(-vertical + horizontal)));
             telemetry.addData("Back Right: ", power * pivot + (power * (-vertical - horizontal)));
 
-            telemetry.addData("Target", aTag.returnAprilTagValues("Name"));
+            //telemetry.addData("Target", aTag.returnAprilTagValues("Name"),);
 
             telemetry.addData("Pivot: ", pivot);
             telemetry.addData("Vertical: ", vertical);
