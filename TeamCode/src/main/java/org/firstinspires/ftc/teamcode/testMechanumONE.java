@@ -24,9 +24,9 @@ public class testMechanumONE extends LinearOpMode
 
             //mc.alignWithAprilTag(.25,30,aTag);
 
-            //mc.drive(90,.5,3000,3000,true);
-            //mc.rotate(90,.25,3000,imu);
-            //mc.drive(90,.5,3000,1500,true);
+            mc.drive(90,.5,3000,3000,true);
+            mc.rotate(90,.25,3000,imu);
+            mc.drive(90,.5,3000,1500,true);
 
 
 
@@ -35,7 +35,7 @@ public class testMechanumONE extends LinearOpMode
             {
                 if(driveBool)
                 {
-                    driveBool = mc.alignWithAprilTag(.25,10,aTag,1);
+                    driveBool = mc.alignWithAprilTag(.25,10,aTag,3);
                 }
                 else
                 {
@@ -63,7 +63,7 @@ public class testMechanumONE extends LinearOpMode
             driveBool = true;
 
             mc.drive(270,.5,6000,3000,true);
-
+            /*
             while(opModeIsActive())
             {
                 if(driveBool)
