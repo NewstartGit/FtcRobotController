@@ -309,6 +309,15 @@ public class MechanumClass {
 
     }
 
-
-
+    public int returnPixelRegion(TensorflowClass tensorflow)
+    {
+        if(tensorflow.runTfod() > 0)
+        {
+            return tensorflow.runTfod();
+        }
+        else
+        {
+            return 0;
+        }
+    }
 }

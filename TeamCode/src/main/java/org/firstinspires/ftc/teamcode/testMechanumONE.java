@@ -10,19 +10,35 @@ public class testMechanumONE extends LinearOpMode
     AprilTagClass aTag = new AprilTagClass();
 
     IMUClass imu = new IMUClass();
+    TensorflowClass tensorflow = new TensorflowClass();
     @Override
     public void runOpMode() throws InterruptedException
     {
         mc.init(hardwareMap, true);
         aTag.initAprilTag(hardwareMap);
         imu.initIMU(hardwareMap);
+        tensorflow.initTfod(hardwareMap);
         waitForStart();
 
         if(opModeIsActive())
         {
+            int pixelPosition = 0;
+            //Move forward to get better view of pixels
+            mc.drive(90,.5,3000,2000,true);
+
+            //Search for and return pixel
+            while(opModeIsActive())
+            {
+                if(pixelPosition == 0)
+                {
+                    pixelPosition = mc.returnPixelRegion(tensorflow);
+                }
+            }
+            /*
             boolean driveBool = true;
 
             //mc.alignWithAprilTag(.25,30,aTag);
+
 
             mc.drive(90,.5,3000,3000,true);
             mc.rotate(90,.25,3000,imu);
@@ -46,7 +62,8 @@ public class testMechanumONE extends LinearOpMode
             driveBool = true;
 
             mc.drive(270,.5,6000,3000,true);
-
+            */
+            /*
             while(opModeIsActive())
             {
                 if(driveBool)
