@@ -7,43 +7,51 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 public class testMechanumONE extends LinearOpMode
 {
     MechanumClass mc = new MechanumClass();
-    AprilTagClass aTag = new AprilTagClass();
+    //AprilTagClass aTag = new AprilTagClass();
 
     IMUClass imu = new IMUClass();
-    TensorflowClass tensorflow = new TensorflowClass();
+    //TensorflowClass tensorflow = new TensorflowClass();
+    CameraClass cam = new CameraClass();
     @Override
     public void runOpMode() throws InterruptedException
     {
         mc.init(hardwareMap, true);
-        aTag.initAprilTag(hardwareMap);
+        //aTag.initAprilTag(hardwareMap);
         imu.initIMU(hardwareMap);
-        tensorflow.initTfod(hardwareMap);
+        cam.init(hardwareMap);
+        //tensorflow.initTfod(hardwareMap);
         waitForStart();
 
         if(opModeIsActive())
         {
             int pixelPosition = 0;
             //Move forward to get better view of pixels
-            mc.drive(90,.5,3000,2000,true);
+            mc.drive(90,.5,3000,1200,true);
 
+            mc.drive(90,0,0,0,false);
             //Search for and return pixel
             while(opModeIsActive())
             {
                 if(pixelPosition == 0)
                 {
-                    pixelPosition = mc.returnPixelRegion(tensorflow);
+                    pixelPosition = mc.returnPixelRegion(cam);
+                }
+                else
+                {
+                    break;
                 }
             }
-            /*
+
             boolean driveBool = true;
 
             //mc.alignWithAprilTag(.25,30,aTag);
 
 
-            mc.drive(90,.5,3000,3000,true);
-            mc.rotate(90,.25,3000,imu);
-            mc.drive(90,.5,3000,1500,true);
+            mc.drive(90,.5,3000,750,true);
+            mc.rotate(90,.225,6000,imu);
+            mc.drive(90,.5,4000,2000,true);
 
+            mc.drive(0,.5,2000,1000,true);
 
 
 
@@ -51,7 +59,7 @@ public class testMechanumONE extends LinearOpMode
             {
                 if(driveBool)
                 {
-                    driveBool = mc.alignWithAprilTag(.25,10,aTag,3);
+                    driveBool = mc.alignWithAprilTag(.25,15,cam,pixelPosition);
                 }
                 else
                 {
@@ -59,10 +67,11 @@ public class testMechanumONE extends LinearOpMode
                 }
                 //mc.drive(270,0.25,1000,1000,true);
             }
+
             driveBool = true;
 
             mc.drive(270,.5,6000,3000,true);
-            */
+
             /*
             while(opModeIsActive())
             {

@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name="Mechanum TeleOP", group="Linear Opmode")
-public class MechanumTeleOp extends LinearOpMode
+@TeleOp(name="HighNoonTeleOp", group="Linear Opmode")
+public class HighNoonTeleOp extends LinearOpMode
 {
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -30,7 +30,7 @@ public class MechanumTeleOp extends LinearOpMode
 
         drive.init(hardwareMap, false);
 
-        cam.init(hardwareMap);
+        //cam.init(hardwareMap);
 
 
         waitForStart();
@@ -42,12 +42,6 @@ public class MechanumTeleOp extends LinearOpMode
             double vertical = -gamepad1.left_stick_x;
             double pivot = -gamepad1.right_stick_x;
 
-            double arm = -gamepad2.right_stick_y;
-
-            boolean servoValOpen = gamepad2.right_bumper;
-            boolean servoValClose = gamepad2.left_bumper;
-
-            boolean bumperPressed;
 
 
             if(gamepad1.dpad_up && power != 1)
@@ -58,16 +52,8 @@ public class MechanumTeleOp extends LinearOpMode
             {
                 power-=.25;
             }
-            if(gamepad1.left_bumper)
-            {
-                bumperPressed = true;
-            }
-            else
-            {
-                bumperPressed = false;
-            }
 
-            drive.teleOP(power,pivot,vertical,horizontal);//arm,servoValOpen,servoValClose, cam, bumperPressed);
+            drive.teleOP(power,pivot,vertical,horizontal);
 
             telemetry.addData("x1 encoder val", drive.getEncoderVal("x1"));
             telemetry.addData("x2 encoder val", drive.getEncoderVal("x2"));

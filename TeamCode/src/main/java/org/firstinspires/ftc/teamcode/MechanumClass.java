@@ -42,9 +42,9 @@ public class MechanumClass {
         backLeft = hwMap.get(DcMotor.class, "BL_Motor");
         backRight = hwMap.get(DcMotor.class, "BR_Motor");
 
-        armMotor = hwMap.get(DcMotor.class, "Arm_Motor");
+        //armMotor = hwMap.get(DcMotor.class, "Arm_Motor");
 
-        handServo = hwMap.get(Servo.class, "Hand_Servo");
+        //handServo = hwMap.get(Servo.class, "Hand_Servo");
 
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
@@ -61,8 +61,8 @@ public class MechanumClass {
             backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-            armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            //armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            //armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
         //frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -70,16 +70,18 @@ public class MechanumClass {
 
     }
 
-    public void teleOP(double power, double pivot, double vertical, double horizontal, double arm, boolean open, boolean close, AprilTagClass aTag, boolean bumperPressed) {
+    public void teleOP(double power, double pivot, double vertical, double horizontal)
+    {
+        //, double arm, boolean open, boolean close, CameraClass aTag, boolean bumperPressed) {
 
         //Placeholder because it gets grumpy
-        armMotor.setTargetPosition(300);
+        //armMotor.setTargetPosition(300);
 
         frontLeft.setPower(-power * pivot + (power * (-vertical - horizontal)));
         frontRight.setPower(-power * pivot + (power * (-vertical + horizontal)));
         backLeft.setPower(power * pivot + (power * (-vertical + horizontal)));
         backRight.setPower(power * pivot + (power * (-vertical - horizontal)));
-
+        /*
         if(arm == 0)
         {
             int armPosition = armMotor.getCurrentPosition();
@@ -185,6 +187,8 @@ public class MechanumClass {
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
     }
 
     //This is going to rotate x degrees, NOT TO x DEGREES
@@ -195,8 +199,9 @@ public class MechanumClass {
         backLeft.setDirection(DcMotor.Direction.REVERSE);
         imu.resetDegree();
         double imuDegrees = imu.runIMU();
+        double threshold = 1;
 
-        while (imuDegrees < degrees) {
+        while (imuDegrees < degrees + threshold) {
             if (-degrees > 0) {
                 frontLeft.setPower(power);
                 frontRight.setPower(-power);
@@ -211,7 +216,7 @@ public class MechanumClass {
                 imuDegrees = imu.runIMU();
             }
         }
-        while (imuDegrees > degrees) {
+        while (imuDegrees > degrees - threshold) {
             if (-degrees > 0) {
                 frontLeft.setPower(-power * .3);
                 frontRight.setPower(power * .3);
@@ -236,7 +241,7 @@ public class MechanumClass {
         backLeft.setDirection(DcMotor.Direction.FORWARD);
     }
 
-    public boolean alignWithAprilTag(double power, int distance, AprilTagClass aTag, int tagID) throws InterruptedException {
+    public boolean alignWithAprilTag(double power, int distance, CameraClass aTag, int tagID) throws InterruptedException {
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.REVERSE);
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
@@ -309,8 +314,9 @@ public class MechanumClass {
 
     }
 
-    public int returnPixelRegion(TensorflowClass tensorflow)
+    public int returnPixelRegion(CameraClass tensorflow)
     {
+        //Loops through, need to give it time before going to else statement
         if(tensorflow.runTfod() > 0)
         {
             return tensorflow.runTfod();
