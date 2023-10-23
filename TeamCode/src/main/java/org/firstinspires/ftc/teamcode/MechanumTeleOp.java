@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.Servo;
-
+@Disabled
 @TeleOp(name="Mechanum TeleOP", group="Linear Opmode")
 public class MechanumTeleOp extends LinearOpMode
 {
@@ -67,7 +67,7 @@ public class MechanumTeleOp extends LinearOpMode
                 bumperPressed = false;
             }
 
-            drive.teleOP(power,pivot,vertical,horizontal);//arm,servoValOpen,servoValClose, cam, bumperPressed);
+            //drive.teleOP(power,pivot,vertical,horizontal);//arm,servoValOpen,servoValClose, cam, bumperPressed);
 
             telemetry.addData("x1 encoder val", drive.getEncoderVal("x1"));
             telemetry.addData("x2 encoder val", drive.getEncoderVal("x2"));

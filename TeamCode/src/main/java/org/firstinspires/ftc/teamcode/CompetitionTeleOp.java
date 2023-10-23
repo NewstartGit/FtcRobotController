@@ -1,17 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.hardware.Servo;
-@Disabled
-@TeleOp(name="HighNoonTeleOp", group="Linear Opmode")
-public class HighNoonTeleOp extends LinearOpMode
+
+@TeleOp(name="CompetitionTeleOp", group="Linear Opmode")
+public class CompetitionTeleOp extends LinearOpMode
 {
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -20,7 +14,7 @@ public class HighNoonTeleOp extends LinearOpMode
 
     //private AprilTagClass aTag = new AprilTagClass();
     private CameraClass cam = new CameraClass();
-    double power = .5;
+    double power = 1;
 
     @Override
     public void runOpMode()
@@ -38,12 +32,12 @@ public class HighNoonTeleOp extends LinearOpMode
 
         while(opModeIsActive())
         {
-            double horizontal = gamepad1.left_stick_y;
-            double vertical = -gamepad1.left_stick_x;
+            double horizontal = gamepad1.left_stick_x;
+            double vertical = -gamepad1.left_stick_y;
             double pivot = -gamepad1.right_stick_x;
 
-            double slider = gamepad2.left_stick_y;
-            double armPivot = gamepad2.right_stick_y;
+            double slider = gamepad2.right_stick_y;
+            //double armPivot = gamepad2.right_stick_y;
 
             boolean intakeOpen = gamepad2.right_bumper;
             boolean intakeClose = gamepad2.left_bumper;
@@ -60,7 +54,7 @@ public class HighNoonTeleOp extends LinearOpMode
             }
 
             drive.teleOP(power,pivot,vertical,horizontal,slider,intakeClose,intakeOpen,pivotUp,pivotDown);
-
+            /*
             telemetry.addData("x1 encoder val", drive.getEncoderVal("x1"));
             telemetry.addData("x2 encoder val", drive.getEncoderVal("x2"));
             telemetry.addData("y encoder val", drive.getEncoderVal("y"));
@@ -69,12 +63,16 @@ public class HighNoonTeleOp extends LinearOpMode
             telemetry.addData("Back Left: ", -power * pivot + (power *(-vertical + horizontal)));
             telemetry.addData("Back Right: ", power * pivot + (power * (-vertical - horizontal)));
 
+
             //telemetry.addData("Target", aTag.returnAprilTagValues("Name"),);
 
             telemetry.addData("Pivot: ", pivot);
             telemetry.addData("Vertical: ", vertical);
             telemetry.addData("Horizontal: ", horizontal);
+            */
+            telemetry.addData("Pivot Servo: ", drive.returnTelemetry("PivotServo"));
             telemetry.update();
+
         }
 
 

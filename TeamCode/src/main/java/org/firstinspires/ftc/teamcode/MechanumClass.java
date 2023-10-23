@@ -17,8 +17,10 @@ public class MechanumClass {
     DcMotor frontRight;
     DcMotor backLeft;
     DcMotor backRight;
-    DcMotor armMotor;
-    Servo handServo;
+    DcMotor sliderRight;
+    DcMotor sliderLeft;
+    Servo pivotServo;
+    Servo clawServo;
 
     public double getEncoderVal(String encoder) {
         //0 = front left motor
@@ -42,7 +44,11 @@ public class MechanumClass {
         backLeft = hwMap.get(DcMotor.class, "BL_Motor");
         backRight = hwMap.get(DcMotor.class, "BR_Motor");
 
-        //armMotor = hwMap.get(DcMotor.class, "Arm_Motor");
+        sliderRight = hwMap.get(DcMotor.class, "R_Slider");
+        sliderLeft = hwMap.get(DcMotor.class, "L_Slider");
+
+        pivotServo = hwMap.get(Servo.class, "PIVOT_Servo");
+        clawServo = hwMap.get(Servo.class, "CLAW_Servo");
 
         //handServo = hwMap.get(Servo.class, "Hand_Servo");
 
@@ -70,58 +76,91 @@ public class MechanumClass {
 
     }
 
-    public void teleOP(double power, double pivot, double vertical, double horizontal)
+    public void teleOP(double power, double pivot, double vertical, double horizontal, double slider, boolean intakeClose, boolean intakeOpen, boolean pivotUp, boolean pivotDown)
     {
         //, double arm, boolean open, boolean close, CameraClass aTag, boolean bumperPressed) {
 
+        double pivotPosition = pivotServo.getPosition();
+        boolean servoTrigger = !intakeOpen;
+        double sliderPower = 0.75;
+        int sliderLimit = 3000;
+        /*
+        if(intakeOpen)
+        {
+            servoTrigger = true;
+        }
+        if(intakeClose)
+        {
+            servoTrigger = false;
+        }
+        */
         //Placeholder because it gets grumpy
-        //armMotor.setTargetPosition(300);
+        sliderRight.setTargetPosition(300);
+        sliderLeft.setTargetPosition(300);
 
-        frontLeft.setPower(-power * pivot + (power * (-vertical - horizontal)));
+        frontLeft.setPower(power * pivot + (power * (-vertical - horizontal)));
         frontRight.setPower(-power * pivot + (power * (-vertical + horizontal)));
         backLeft.setPower(power * pivot + (power * (-vertical + horizontal)));
-        backRight.setPower(power * pivot + (power * (-vertical - horizontal)));
-        /*
-        if(arm == 0)
-        {
-            int armPosition = armMotor.getCurrentPosition();
-            armMotor.setTargetPosition(armPosition);
+        backRight.setPower(-power * pivot + (power * (-vertical - horizontal)));
 
-            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            armMotor.setPower(0.1);
+        /*
+        if(pivotPosition <= -.25 && pivotUp)
+        {
+            pivotServo.setPosition(pivotPosition - .01);
+        }
+
+        if(pivotPosition >= 0 && pivotDown)
+        {
+            pivotServo.setPosition(pivotPosition + .01);
+        }
+        */
+        if(pivotUp)
+        {
+            pivotServo.setPosition(.75);
+        }
+        else if(pivotDown)
+        {
+            pivotServo.setPosition(.9);
         }
         else
         {
-            armMotor.setPower(arm);
-        }
-        /*
-        if(bumperPressed && aTag.returnAprilTagValues("Detected") == -1 && aTag.returnAprilTagValues("Distance") > 30)
-        {
-            double distancePower = .3;
-            double pivotPower = 1;
-            double strafePower = 1;
-            horizontal = -aTag.returnAprilTagValues("Distance") * distancePower;
-            pivot = aTag.returnAprilTagValues("Yaw") * pivotPower;
-            vertical = aTag.returnAprilTagValues("Heading") * strafePower;
-
-            power = .1;
-
-            frontLeft.setPower(-power * pivot + (power * (-vertical - horizontal)));
-            frontRight.setPower(-power * pivot + (power * (-vertical + horizontal)));
-            backLeft.setPower(power * pivot + (power * (-vertical + horizontal)));
-            backRight.setPower(power * pivot + (power * (-vertical - horizontal)));
-        }
-        /*
-        if(open)
-        {
-            handServo.setPosition(90);
-        }
-        if(close)
-        {
-            handServo.setPosition(0);
+            pivotServo.setPosition(1);
         }
 
-         */
+
+        if(sliderRight.getCurrentPosition() <= sliderLimit && sliderLeft.getCurrentPosition() <= sliderLimit)
+        {
+            sliderRight.setPower(-slider * sliderPower);
+            sliderLeft.setPower(slider * sliderPower);
+        }
+        else
+        {
+            sliderRight.setPower(0.05);
+            sliderLeft.setPower(0.05);
+        }
+
+        if(servoTrigger)
+        {
+            //servo close
+            clawServo.setPosition(0);
+        }
+        else
+        {
+            //servo open
+            clawServo.setPosition(1);
+        }
+    }
+
+    public double returnTelemetry(String hardware)
+    {
+        if(hardware.equalsIgnoreCase("PivotServo"))
+        {
+            return pivotServo.getPosition();
+        }
+        else
+        {
+            return 3;
+        }
     }
 
     public void drive(double angle, double power, long delay, int position, boolean run) throws InterruptedException {
