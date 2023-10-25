@@ -55,6 +55,15 @@ public class MechanumClass {
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
 
+        sliderRight.setDirection(DcMotor.Direction.REVERSE);
+
+
+        sliderRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        sliderLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        sliderRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sliderLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -62,6 +71,9 @@ public class MechanumClass {
 
         if(!autoMode)
         {
+            sliderRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            sliderLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
             frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -76,7 +88,7 @@ public class MechanumClass {
 
     }
 
-    public void teleOP(double power, double pivot, double vertical, double horizontal, double slider, boolean intakeClose, boolean intakeOpen, boolean pivotUp, boolean pivotDown)
+    public void teleOP(double power, double pivot, double vertical, double horizontal, double slider, boolean intakeClose, boolean intakeOpen, boolean pivotUp, boolean pivotDown, boolean pivotRestart)
     {
         //, double arm, boolean open, boolean close, CameraClass aTag, boolean bumperPressed) {
 
@@ -122,7 +134,7 @@ public class MechanumClass {
         {
             pivotServo.setPosition(.9);
         }
-        else
+        else if(pivotRestart)
         {
             pivotServo.setPosition(1);
         }
@@ -130,7 +142,7 @@ public class MechanumClass {
 
         if(sliderRight.getCurrentPosition() <= sliderLimit && sliderLeft.getCurrentPosition() <= sliderLimit)
         {
-            sliderRight.setPower(-slider * sliderPower);
+            sliderRight.setPower(slider * sliderPower);
             sliderLeft.setPower(slider * sliderPower);
         }
         else
@@ -139,12 +151,12 @@ public class MechanumClass {
             sliderLeft.setPower(0.05);
         }
 
-        if(servoTrigger)
+        if(intakeClose)
         {
             //servo close
             clawServo.setPosition(0);
         }
-        else
+        else if(intakeOpen)
         {
             //servo open
             clawServo.setPosition(1);
@@ -171,7 +183,7 @@ public class MechanumClass {
             backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
 
             // converts the degrees that is inputted to radians, adjusted to equal unit circle
-            double radAngle = Math.toRadians(-angle + 90);
+            double radAngle = Math.toRadians(angle-90);
             // calculate motor power
             double ADPower = power * Math.sqrt(2) * 0.5 * (Math.sin(radAngle) + Math.cos(radAngle));
             double BCPower = power * Math.sqrt(2) * 0.5 * (Math.sin(radAngle) - Math.cos(radAngle));
@@ -232,14 +244,15 @@ public class MechanumClass {
 
     //This is going to rotate x degrees, NOT TO x DEGREES
     public void rotate(double degrees, double power, long delay, IMUClass imu) throws InterruptedException {
-        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);//
         backRight.setDirection(DcMotor.Direction.REVERSE);
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.FORWARD);//
         imu.resetDegree();
         double imuDegrees = imu.runIMU();
         double threshold = 1;
 
+        //This isnt working
         while (imuDegrees < degrees + threshold) {
             if (-degrees > 0) {
                 frontLeft.setPower(power);
@@ -279,6 +292,37 @@ public class MechanumClass {
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         backLeft.setDirection(DcMotor.Direction.FORWARD);
     }
+
+    public void liftSlide(double power, int position, long delay) throws InterruptedException
+    {
+        sliderLeft.setTargetPosition(position);
+        sliderRight.setTargetPosition(position);
+
+        sliderLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        sliderRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        sliderLeft.setPower(power);sliderLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        sliderRight.setPower(power);
+
+        Thread.sleep(delay);
+    }
+    public void rotateArm(double servoPosition)
+    {
+        //1 is default, .9 is slightly up, .75 is for board
+        pivotServo.setPosition(servoPosition);
+    }
+    public void closeClaw(boolean clawState)
+    {
+        if(clawState)
+        {
+            clawServo.setPosition(0);
+        }
+        else
+        {
+            clawServo.setPosition(1);
+        }
+    }
+
 
     public boolean alignWithAprilTag(double power, int distance, CameraClass aTag, int tagID) throws InterruptedException {
         frontRight.setDirection(DcMotor.Direction.FORWARD);

@@ -26,10 +26,15 @@ public class testMechanumONE extends LinearOpMode
         {
             int pixelPosition = 0;
             //Move forward to get better view of pixels
-            mc.drive(90,.5,3000,1200,true);
+            mc.drive(90,.5,5000,1200,true);
+            //mc.rotate(90,.5,3000,imu);
+            mc.drive(0,.5,5000,5000,true);
+            mc.rotate(90,.5,10000,imu);
+            //mc.drive(180,.5,10000,5000,true);
 
-            mc.drive(90,0,0,0,false);
+            //mc.drive(90,0,0,0,false);
             //Search for and return pixel
+            /*
             while(opModeIsActive())
             {
                 if(pixelPosition == 0)

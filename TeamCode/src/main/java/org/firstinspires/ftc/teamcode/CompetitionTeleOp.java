@@ -32,8 +32,8 @@ public class CompetitionTeleOp extends LinearOpMode
 
         while(opModeIsActive())
         {
-            double horizontal = gamepad1.left_stick_x;
-            double vertical = -gamepad1.left_stick_y;
+            double horizontal = -gamepad1.left_stick_y;
+            double vertical = gamepad1.left_stick_x;
             double pivot = -gamepad1.right_stick_x;
 
             double slider = gamepad2.right_stick_y;
@@ -42,8 +42,10 @@ public class CompetitionTeleOp extends LinearOpMode
             boolean intakeOpen = gamepad2.right_bumper;
             boolean intakeClose = gamepad2.left_bumper;
 
-            boolean pivotDown = gamepad2.dpad_down;
+            boolean pivotSmallUp = gamepad2.dpad_left;
             boolean pivotUp = gamepad2.dpad_up;
+            boolean pivotRestart = gamepad2.dpad_down;
+
             if(gamepad1.dpad_up && power != 1)
             {
                 power+=.25;
@@ -53,7 +55,7 @@ public class CompetitionTeleOp extends LinearOpMode
                 power-=.25;
             }
 
-            drive.teleOP(power,pivot,vertical,horizontal,slider,intakeClose,intakeOpen,pivotUp,pivotDown);
+            drive.teleOP(power,pivot,vertical,horizontal,slider,intakeClose,intakeOpen,pivotUp,pivotSmallUp,pivotRestart);
             /*
             telemetry.addData("x1 encoder val", drive.getEncoderVal("x1"));
             telemetry.addData("x2 encoder val", drive.getEncoderVal("x2"));
