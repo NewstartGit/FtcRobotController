@@ -31,14 +31,14 @@ public class CompetitionAutonomous extends LinearOpMode
 
             mc.rotateArm(.9);
 
-            mc.closeClaw(true);
+            mc.closeClaw(true, 1000);
 
             mc.drive(0,.5,3000,1000,true);
 
             mc.rotate(90,.5,5000,imu);
             mc.rotate(-90,.5,5000,imu);
 
-            mc.closeClaw(false);
+            mc.closeClaw(false, 1000);
 
             mc.liftSlide(.5,0,5000);
 

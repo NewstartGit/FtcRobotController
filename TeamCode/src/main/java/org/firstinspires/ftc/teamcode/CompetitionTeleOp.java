@@ -42,6 +42,9 @@ public class CompetitionTeleOp extends LinearOpMode
             boolean intakeOpen = gamepad2.right_bumper;
             boolean intakeClose = gamepad2.left_bumper;
 
+            boolean backIntakeOpen = gamepad1.right_bumper;
+            boolean backIntakeClose = gamepad1.left_bumper;
+
             boolean pivotSmallUp = gamepad2.dpad_left;
             boolean pivotUp = gamepad2.dpad_up;
             boolean pivotRestart = gamepad2.dpad_down;
@@ -55,7 +58,7 @@ public class CompetitionTeleOp extends LinearOpMode
                 power-=.25;
             }
 
-            drive.teleOP(power,pivot,vertical,horizontal,slider,intakeClose,intakeOpen,pivotUp,pivotSmallUp,pivotRestart);
+            drive.teleOP(power,pivot,vertical,horizontal,slider,intakeClose,intakeOpen,pivotUp,pivotSmallUp,pivotRestart,backIntakeClose,backIntakeOpen);
             /*
             telemetry.addData("x1 encoder val", drive.getEncoderVal("x1"));
             telemetry.addData("x2 encoder val", drive.getEncoderVal("x2"));
@@ -73,6 +76,9 @@ public class CompetitionTeleOp extends LinearOpMode
             telemetry.addData("Horizontal: ", horizontal);
             */
             telemetry.addData("Pivot Servo: ", drive.returnTelemetry("PivotServo"));
+            telemetry.addData("Right Claw: ", drive.returnTelemetry("Right Claw"));
+            telemetry.addData("Left Claw: ", drive.returnTelemetry("Left Claw"));
+
             telemetry.update();
 
         }

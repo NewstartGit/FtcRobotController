@@ -19,12 +19,16 @@ public class ParkRight extends LinearOpMode
         //aTag.initAprilTag(hardwareMap);
         imu.initIMU(hardwareMap);
         cam.init(hardwareMap);
+        mc.closeClaw(true,1000);
         //tensorflow.initTfod(hardwareMap);
         waitForStart();
 
         if(opModeIsActive())
         {
-            mc.drive(0,.5,5000,7500,true);
+            //mc.closeClaw(true,1000);
+            //mc.drive(90,.5,3000,500,true);
+            mc.drive(0,.5,5000,7750,true);
+            mc.drive(180,.5,3000,500,true);
         }
 
     }

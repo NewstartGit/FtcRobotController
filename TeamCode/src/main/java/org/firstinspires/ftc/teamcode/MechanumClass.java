@@ -21,6 +21,8 @@ public class MechanumClass {
     DcMotor sliderLeft;
     Servo pivotServo;
     Servo clawServo;
+    Servo backServoLeft;
+    Servo backServoRight;
 
     public double getEncoderVal(String encoder) {
         //0 = front left motor
@@ -49,6 +51,8 @@ public class MechanumClass {
 
         pivotServo = hwMap.get(Servo.class, "PIVOT_Servo");
         clawServo = hwMap.get(Servo.class, "CLAW_Servo");
+        backServoLeft = hwMap.get(Servo.class, "BL_Servo");
+        backServoRight = hwMap.get(Servo.class,"BR_Servo");
 
         //handServo = hwMap.get(Servo.class, "Hand_Servo");
 
@@ -88,7 +92,7 @@ public class MechanumClass {
 
     }
 
-    public void teleOP(double power, double pivot, double vertical, double horizontal, double slider, boolean intakeClose, boolean intakeOpen, boolean pivotUp, boolean pivotDown, boolean pivotRestart)
+    public void teleOP(double power, double pivot, double vertical, double horizontal, double slider, boolean intakeClose, boolean intakeOpen, boolean pivotUp, boolean pivotDown, boolean pivotRestart, boolean backIntakeClose, boolean backIntakeOpen)
     {
         //, double arm, boolean open, boolean close, CameraClass aTag, boolean bumperPressed) {
 
@@ -159,7 +163,18 @@ public class MechanumClass {
         else if(intakeOpen)
         {
             //servo open
-            clawServo.setPosition(1);
+            clawServo.setPosition(.75);
+        }
+
+        if(backIntakeClose)
+        {
+            backServoLeft.setPosition(.25);
+            backServoRight.setPosition(.25);
+        }
+        else if(backIntakeOpen)
+        {
+            backServoLeft.setPosition(0);
+            backServoRight.setPosition(0);
         }
     }
 
@@ -168,6 +183,14 @@ public class MechanumClass {
         if(hardware.equalsIgnoreCase("PivotServo"))
         {
             return pivotServo.getPosition();
+        }
+        else if(hardware.equalsIgnoreCase("Right Claw"))
+        {
+            return backServoRight.getPosition();
+        }
+        else if(hardware.equalsIgnoreCase("Left Claw"))
+        {
+            return backServoLeft.getPosition();
         }
         else
         {
@@ -311,7 +334,7 @@ public class MechanumClass {
         //1 is default, .9 is slightly up, .75 is for board
         pivotServo.setPosition(servoPosition);
     }
-    public void closeClaw(boolean clawState)
+    public void closeClaw(boolean clawState, long delay) throws InterruptedException
     {
         if(clawState)
         {
@@ -321,6 +344,21 @@ public class MechanumClass {
         {
             clawServo.setPosition(1);
         }
+        Thread.sleep(delay);
+    }
+    public void backClawClose(boolean clawState,long delay) throws InterruptedException
+    {
+        if(clawState)
+        {
+            backServoLeft.setPosition(.25);
+            backServoRight.setPosition(.25);
+        }
+        else
+        {
+            backServoLeft.setPosition(0);
+            backServoRight.setPosition(0);
+        }
+        Thread.sleep(delay);
     }
 
 
