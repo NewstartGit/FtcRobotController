@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="((COMP)) LEFT BLUE", group="Linear Opmode")
-public class AutoCOMP_LeftBlue extends LinearOpMode
+@Autonomous(name="((COMP)) RIGHT RED", group="Linear Opmode")
+public class AutoCOMP_RightRed extends LinearOpMode
 {
     MechanumClass mc = new MechanumClass();
     //AprilTagClass aTag = new AprilTagClass();
@@ -33,13 +33,13 @@ public class AutoCOMP_LeftBlue extends LinearOpMode
 
             mc.drive(90,.5,4000,3000,true);
 
-            mc.drive(180,.5,4000,1750,true);
+            mc.drive(0,.5,4000,1750,true);
 
             mc.closeClaw(false,1);
 
             mc.drive(270,.5,4000,1000,true);
 
-            mc.drive(180,.5,4000,5000,true);
+            mc.drive(0,.5,4000,5000,true);
 
             mc.backClawClose(false,1);
 

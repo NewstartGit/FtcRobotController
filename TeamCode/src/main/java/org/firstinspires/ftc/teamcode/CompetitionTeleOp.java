@@ -78,6 +78,9 @@ public class CompetitionTeleOp extends LinearOpMode
             telemetry.addData("Pivot Servo: ", drive.returnTelemetry("PivotServo"));
             telemetry.addData("Right Claw: ", drive.returnTelemetry("Right Claw"));
             telemetry.addData("Left Claw: ", drive.returnTelemetry("Left Claw"));
+            telemetry.addData("Right Slide: ", drive.returnTelemetry("Right Slide"));
+            telemetry.addData("Left Slider: ", drive.returnTelemetry("Left Slide"));
+
 
             telemetry.update();
 

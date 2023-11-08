@@ -24,12 +24,23 @@ public class CompetitionAutonomous extends LinearOpMode
 
         if(opModeIsActive())
         {
+            mc.drive(0,.5,2000,500,true);
+            //mc.drive(90,.5,2000,500,true);
+            //mc.drive(180,.5,2000,500,true);
+            //mc.drive(270,.5,2000,500,true);
+
+            //mc.rotate(90,.5,5000,imu);
+            mc.rotate(0,.5,5000,imu);
+
+            mc.drive(90,.5,2000,500,true);
+
+            /*
             int pixelPosition = 0;
             boolean driveBool = true;
 
             mc.liftSlide(.5,1000, 5000);
 
-            mc.rotateArm(.9);
+            mc.rotateArm(.9,1000);
 
             mc.closeClaw(true, 1000);
 
@@ -42,6 +53,8 @@ public class CompetitionAutonomous extends LinearOpMode
 
             mc.liftSlide(.5,0,5000);
 
+
+             */
         }
 
     }

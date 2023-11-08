@@ -192,6 +192,14 @@ public class MechanumClass {
         {
             return backServoLeft.getPosition();
         }
+        else if(hardware.equalsIgnoreCase("Right Slide"))
+        {
+            return sliderRight.getPower();
+        }
+        else if(hardware.equalsIgnoreCase("Left Slide"))
+        {
+            return sliderLeft.getPower();
+        }
         else
         {
             return 3;
@@ -206,7 +214,7 @@ public class MechanumClass {
             backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
 
             // converts the degrees that is inputted to radians, adjusted to equal unit circle
-            double radAngle = Math.toRadians(angle-90);
+            double radAngle = Math.toRadians(-angle-90);
             // calculate motor power
             double ADPower = power * Math.sqrt(2) * 0.5 * (Math.sin(radAngle) + Math.cos(radAngle));
             double BCPower = power * Math.sqrt(2) * 0.5 * (Math.sin(radAngle) - Math.cos(radAngle));
@@ -318,31 +326,33 @@ public class MechanumClass {
 
     public void liftSlide(double power, int position, long delay) throws InterruptedException
     {
-        sliderLeft.setTargetPosition(position);
-        sliderRight.setTargetPosition(position);
+        sliderLeft.setTargetPosition(-position);
+        sliderRight.setTargetPosition(-position);
 
         sliderLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         sliderRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        sliderLeft.setPower(power);sliderLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        sliderLeft.setPower(power);
         sliderRight.setPower(power);
 
         Thread.sleep(delay);
     }
-    public void rotateArm(double servoPosition)
+    public void rotateArm(double servoPosition, long delay) throws InterruptedException
     {
         //1 is default, .9 is slightly up, .75 is for board
         pivotServo.setPosition(servoPosition);
+
+        Thread.sleep(delay);
     }
     public void closeClaw(boolean clawState, long delay) throws InterruptedException
     {
         if(clawState)
         {
-            clawServo.setPosition(0);
+            clawServo.setPosition(.75);
         }
         else
         {
-            clawServo.setPosition(1);
+            clawServo.setPosition(0);
         }
         Thread.sleep(delay);
     }

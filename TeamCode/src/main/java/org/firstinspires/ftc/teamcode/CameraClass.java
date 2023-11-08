@@ -135,7 +135,7 @@ public class CameraClass {
         visionPortal = builder.build();
 
         // Set confidence threshold for TFOD recognitions, at any time.
-        tfod.setMinResultConfidence(0.6f);
+        tfod.setMinResultConfidence(0.75f);
         tfod.setZoom(1);
 
 
@@ -161,6 +161,10 @@ public class CameraClass {
             if(x < 200)
             {
                 return 1;
+            }
+            else if(x > 200 && x < 400)
+            {
+                return 2;
             }
             else
             {
