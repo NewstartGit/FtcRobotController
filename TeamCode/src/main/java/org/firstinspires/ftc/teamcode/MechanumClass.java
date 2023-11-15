@@ -24,6 +24,10 @@ public class MechanumClass {
     Servo backServoLeft;
     Servo backServoRight;
 
+    Servo droneServo;
+
+    IMUClass imu;
+
     public double getEncoderVal(String encoder) {
         //0 = front left motor
         //1 = front right motor
@@ -53,6 +57,8 @@ public class MechanumClass {
         clawServo = hwMap.get(Servo.class, "CLAW_Servo");
         backServoLeft = hwMap.get(Servo.class, "BL_Servo");
         backServoRight = hwMap.get(Servo.class,"BR_Servo");
+
+        droneServo = hwMap.get(Servo.class,"DRONE_Servo");
 
         //handServo = hwMap.get(Servo.class, "Hand_Servo");
 
@@ -92,7 +98,7 @@ public class MechanumClass {
 
     }
 
-    public void teleOP(double power, double pivot, double vertical, double horizontal, double slider, boolean intakeClose, boolean intakeOpen, boolean pivotUp, boolean pivotDown, boolean pivotRestart, boolean backIntakeClose, boolean backIntakeOpen)
+    public void teleOP(double power, double pivot, double vertical, double horizontal, double slider, boolean intakeClose, boolean intakeOpen, boolean pivotUp, boolean pivotDown, boolean pivotRestart, boolean backIntakeClose, boolean backIntakeOpen,boolean droneLaunch)
     {
         //, double arm, boolean open, boolean close, CameraClass aTag, boolean bumperPressed) {
 
@@ -158,12 +164,12 @@ public class MechanumClass {
         if(intakeClose)
         {
             //servo close
-            clawServo.setPosition(0);
+            clawServo.setPosition(.5);
         }
         else if(intakeOpen)
         {
             //servo open
-            clawServo.setPosition(.75);
+            clawServo.setPosition(1);
         }
 
         if(backIntakeClose)
@@ -176,10 +182,19 @@ public class MechanumClass {
             backServoLeft.setPosition(0);
             backServoRight.setPosition(0);
         }
+
+        if(droneLaunch)
+        {
+            droneServo.setPosition(0.5);
+        }
     }
 
-    public double returnTelemetry(String hardware)
-    {
+    public IMUClass returnIMU(IMUClass imuImport) throws InterruptedException {
+        imu = imuImport;
+        return imu;
+    }
+
+    public double returnTelemetry(String hardware) throws InterruptedException {
         if(hardware.equalsIgnoreCase("PivotServo"))
         {
             return pivotServo.getPosition();
@@ -199,6 +214,14 @@ public class MechanumClass {
         else if(hardware.equalsIgnoreCase("Left Slide"))
         {
             return sliderLeft.getPower();
+        }
+        else if(hardware.equalsIgnoreCase("Front Claw"))
+        {
+            return clawServo.getPosition();
+        }
+        else if(hardware.equalsIgnoreCase("imu"))
+        {
+            return imu.runIMU();
         }
         else
         {
@@ -281,39 +304,43 @@ public class MechanumClass {
         backLeft.setDirection(DcMotor.Direction.FORWARD);//
         imu.resetDegree();
         double imuDegrees = imu.runIMU();
-        double threshold = 1;
+        double threshold = 9;
+        double multiplier = (degrees - imuDegrees)/degrees;
 
-        //This isnt working
-        while (imuDegrees < degrees + threshold) {
+
+        //Position is positive
+        while (imuDegrees < degrees - threshold) {
+            //clockwise
+            frontLeft.setPower(power  * multiplier);
+            frontRight.setPower(-power  * multiplier);
+            backLeft.setPower(power  * multiplier);
+            backRight.setPower(-power  * multiplier);
+            multiplier = (degrees - imuDegrees)/degrees;
+            imuDegrees = imu.runIMU();
+        }
+
+
+        /*
+        //Negative
+        while (imuDegrees > degrees + threshold) {
             if (-degrees > 0) {
-                frontLeft.setPower(power);
-                frontRight.setPower(-power);
-                backLeft.setPower(power);
-                backRight.setPower(-power);
+                //Counter Clock
+                frontLeft.setPower(-power * multiplier);
+                frontRight.setPower(power * multiplier);
+                backLeft.setPower(-power * multiplier);
+                backRight.setPower(power * multiplier);
                 imuDegrees = imu.runIMU();
             } else {
-                frontLeft.setPower(-power);
-                frontRight.setPower(power);
-                backLeft.setPower(-power);
-                backRight.setPower(power);
+                //Clockwise
+                frontLeft.setPower(power * multiplier);
+                frontRight.setPower(-power * multiplier);
+                backLeft.setPower(power * multiplier);
+                backRight.setPower(-power * multiplier);
                 imuDegrees = imu.runIMU();
             }
         }
-        while (imuDegrees > degrees - threshold) {
-            if (-degrees > 0) {
-                frontLeft.setPower(-power * .3);
-                frontRight.setPower(power * .3);
-                backLeft.setPower(-power * .3);
-                backRight.setPower(power * .3);
-                imuDegrees = imu.runIMU();
-            } else {
-                frontLeft.setPower(power * .3);
-                frontRight.setPower(-power * .3);
-                backLeft.setPower(power * .3);
-                backRight.setPower(-power * .3);
-                imuDegrees = imu.runIMU();
-            }
-        }
+
+         */
         frontLeft.setPower(0);
         frontRight.setPower(0);
         backLeft.setPower(0);
@@ -348,7 +375,7 @@ public class MechanumClass {
     {
         if(clawState)
         {
-            clawServo.setPosition(.75);
+            clawServo.setPosition(1);
         }
         else
         {

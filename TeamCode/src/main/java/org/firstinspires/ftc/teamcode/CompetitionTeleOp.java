@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class CompetitionTeleOp extends LinearOpMode
 {
 
+    public IMUClass imu = new IMUClass();
     private ElapsedTime runtime = new ElapsedTime();
 
     private MechanumClass drive = new MechanumClass();
@@ -17,12 +18,14 @@ public class CompetitionTeleOp extends LinearOpMode
     double power = 1;
 
     @Override
-    public void runOpMode()
-    {
+    public void runOpMode() throws InterruptedException {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         drive.init(hardwareMap, false);
+        imu.initIMU(hardwareMap);
+
+        drive.returnIMU(imu);
 
         //cam.init(hardwareMap);
 
@@ -49,6 +52,8 @@ public class CompetitionTeleOp extends LinearOpMode
             boolean pivotUp = gamepad2.dpad_up;
             boolean pivotRestart = gamepad2.dpad_down;
 
+            boolean droneLaunch = gamepad2.x;
+
             if(gamepad1.dpad_up && power != 1)
             {
                 power+=.25;
@@ -58,7 +63,7 @@ public class CompetitionTeleOp extends LinearOpMode
                 power-=.25;
             }
 
-            drive.teleOP(power,pivot,vertical,horizontal,slider,intakeClose,intakeOpen,pivotUp,pivotSmallUp,pivotRestart,backIntakeClose,backIntakeOpen);
+            drive.teleOP(power,pivot,vertical,horizontal,slider,intakeClose,intakeOpen,pivotUp,pivotSmallUp,pivotRestart,backIntakeClose,backIntakeOpen,droneLaunch);
             /*
             telemetry.addData("x1 encoder val", drive.getEncoderVal("x1"));
             telemetry.addData("x2 encoder val", drive.getEncoderVal("x2"));
@@ -80,7 +85,8 @@ public class CompetitionTeleOp extends LinearOpMode
             telemetry.addData("Left Claw: ", drive.returnTelemetry("Left Claw"));
             telemetry.addData("Right Slide: ", drive.returnTelemetry("Right Slide"));
             telemetry.addData("Left Slider: ", drive.returnTelemetry("Left Slide"));
-
+            telemetry.addData("Front Claw: ", drive.returnTelemetry("Front Claw"));
+            telemetry.addData("Heading: ", drive.returnTelemetry("imu"));
 
             telemetry.update();
 

@@ -9,7 +9,7 @@ public class AutoCOMP_LeftBlue extends LinearOpMode
     MechanumClass mc = new MechanumClass();
     //AprilTagClass aTag = new AprilTagClass();
 
-    IMUClass imu = new IMUClass();
+    public IMUClass imu = new IMUClass();
     //TensorflowClass tensorflow = new TensorflowClass();
     CameraClass cam = new CameraClass();
     @Override

@@ -9,7 +9,7 @@ public class CompetitionAutonomous extends LinearOpMode
     MechanumClass mc = new MechanumClass();
     //AprilTagClass aTag = new AprilTagClass();
 
-    IMUClass imu = new IMUClass();
+    public IMUClass imu = new IMUClass();
     //TensorflowClass tensorflow = new TensorflowClass();
     CameraClass cam = new CameraClass();
     @Override
@@ -24,15 +24,17 @@ public class CompetitionAutonomous extends LinearOpMode
 
         if(opModeIsActive())
         {
-            mc.drive(0,.5,2000,500,true);
+            mc.drive(90,.5,2000,500,true);
             //mc.drive(90,.5,2000,500,true);
             //mc.drive(180,.5,2000,500,true);
             //mc.drive(270,.5,2000,500,true);
 
             //mc.rotate(90,.5,5000,imu);
-            mc.rotate(0,.5,5000,imu);
+            //mc.rotate(3.14/2,.5,5000,imu);
 
-            mc.drive(90,.5,2000,500,true);
+            //mc.drive(90,.5,2000,500,true);
+
+            mc.rotate(90,.5,5000,imu);
 
             /*
             int pixelPosition = 0;
