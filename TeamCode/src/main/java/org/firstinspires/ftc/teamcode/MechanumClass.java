@@ -304,19 +304,47 @@ public class MechanumClass {
         backLeft.setDirection(DcMotor.Direction.FORWARD);//
         imu.resetDegree();
         double imuDegrees = imu.runIMU();
-        double threshold = 9;
+        double threshold = .5;
         double multiplier = (degrees - imuDegrees)/degrees;
 
 
-        //Position is positive
-        while (imuDegrees < degrees - threshold) {
-            //clockwise
-            frontLeft.setPower(power  * multiplier);
-            frontRight.setPower(-power  * multiplier);
-            backLeft.setPower(power  * multiplier);
-            backRight.setPower(-power  * multiplier);
-            multiplier = (degrees - imuDegrees)/degrees;
-            imuDegrees = imu.runIMU();
+        if(degrees > 0)
+        {
+            //Position is positive
+            while (imuDegrees < degrees - threshold) {
+                //clockwise
+                frontLeft.setPower(power  * multiplier);
+                frontRight.setPower(-power  * multiplier);
+                backLeft.setPower(power  * multiplier);
+                backRight.setPower(-power  * multiplier);
+                multiplier = ((degrees - imuDegrees)/degrees) +.25;
+                imuDegrees = imu.runIMU();
+                //If it goes negative (with some tolerance) then stop
+                if(imuDegrees < -30)
+                {
+                    return;
+                }
+            }
+
+        }
+        else
+        {
+            //Position is negative
+            while (imuDegrees > degrees + threshold) {
+                //clockwise
+                frontLeft.setPower(-power  * multiplier);
+                frontRight.setPower(power  * multiplier);
+                backLeft.setPower(-power  * multiplier);
+                backRight.setPower(power  * multiplier);
+                multiplier = ((degrees - imuDegrees)/degrees) +.25;
+                imuDegrees = imu.runIMU();
+                //If it goes positive (with some tolerance) then stop
+                if(imuDegrees > 30)
+                {
+                    return;
+                }
+            }
+
         }
 
 
