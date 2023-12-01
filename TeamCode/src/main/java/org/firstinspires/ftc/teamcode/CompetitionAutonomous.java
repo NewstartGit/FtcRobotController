@@ -24,16 +24,17 @@ public class CompetitionAutonomous extends LinearOpMode
 
         if(opModeIsActive())
         {
-            mc.backClawClose(true,500);
+            mc.backClawClose(true,100);
+            mc.closeClaw(true,100);
 
             int pixelPosition = 0;
 
-            mc.drive(90,.5,1000,500,true);
-            mc.drive(0,.5,100,0,false);
+            //mc.drive(90,.5,1000,500,true);
+            //mc.drive(0,.5,100,0,false);
 
-            mc.liftSlide(.5,2000,2000);
+            mc.liftSlide(.5,2400,4500);
 
-            mc.rotateArm(.95,3500);
+            //mc.rotateArm(.95,3500);
 
             //Scan
             while(opModeIsActive())
@@ -63,9 +64,9 @@ public class CompetitionAutonomous extends LinearOpMode
                  */
             }
 
-            mc.liftSlide(.5,0,2000);
+            mc.liftSlide(.5,50,2000);
 
-            mc.rotateArm(1,250);
+            //mc.rotateArm(1,250);
 
             switch(pixelPosition)
             {
@@ -75,7 +76,7 @@ public class CompetitionAutonomous extends LinearOpMode
                     //Turn around
                     mc.rotate(180,.75,4000,imu);
                     //Move to align with pixel
-                    mc.drive(0,.5,1000,1000,true);
+                    mc.drive(0,.5,1250,1250,true);
                     //Back up into the pixel
                     mc.drive(270,.75,1000,1000,true);
                     mc.drive(0,0,100,0,false);
@@ -89,7 +90,23 @@ public class CompetitionAutonomous extends LinearOpMode
                     mc.rotate(-90,.5,2000,imu);
                     break;
                 case 2:
-                    mc.drive(90,.5,2000,500,true);
+                    //Move forward
+                    mc.drive(90,.75,1000,1000,true);
+                    //Move to align with pixel
+                    mc.drive(180,.5,2000,1900,true);
+                    mc.drive(0,0,500,0,false);
+                    //Turn to face board (it tends to overshoot a lil bit)
+                    mc.rotate(95,.5,4000,imu);
+                    //Move to align with pixel
+                    mc.drive(0,.75,3000,2900,true);
+                    mc.drive(0,0,500,0,false);
+                    //Open claw
+                    mc.backClawClose(false,1);
+                    //Prevent weird glitch where claw movement will rotate bot
+                    mc.drive(0,0,100,0,false);
+                    //Move forward
+                    mc.drive(90,.75,1500,500,true);
+                    mc.drive(0,0,100,0,false);
                     break;
                 case 3:
                     //Move forward
@@ -98,19 +115,21 @@ public class CompetitionAutonomous extends LinearOpMode
                     mc.rotate(90,.5,4000,imu);
                     //Move to align with pixel
                     mc.drive(0,.5,2000,2500,true);
+                    mc.drive(0,0,500,0,false);
                     //Back up into the pixel
-                    mc.drive(270,.75,1000,500,true);
-                    mc.drive(0,0,100,0,false);
+                    mc.drive(270,.75,1000,750,true);
+                    mc.drive(0,0,500,0,false);
                     //Open claw
-                    mc.backClawClose(false,10);
+                    mc.backClawClose(false,1);
                     //Prevent weird glitch
-                    mc.drive(0,0,100,0,false);
+                    mc.drive(0,0,200,0,false);
                     //Move forward
                     mc.drive(90,.75,1500,2000,true);
+                    mc.drive(0,0,100,0,false);
 
                     break;
                 default:
-                    mc.drive(0,.5,2000,2000,true);
+                    //mc.drive(180,.5,5000,5000,true);
                     break;
             }
 
