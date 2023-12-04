@@ -20,12 +20,15 @@ public class CompetitionAutonomous extends LinearOpMode
         imu.initIMU(hardwareMap);
         cam.init(hardwareMap);
         //tensorflow.initTfod(hardwareMap);
+
+        mc.backClawClose(true,100);
+        mc.closeClaw(true,100);
+
         waitForStart();
 
         if(opModeIsActive())
         {
-            mc.backClawClose(true,100);
-            mc.closeClaw(true,100);
+
 
             int pixelPosition = 0;
 
@@ -64,7 +67,8 @@ public class CompetitionAutonomous extends LinearOpMode
                  */
             }
 
-            mc.liftSlide(.5,50,2000);
+            mc.rotateArm(.7,100);
+            mc.liftSlide(.5,100,2000);
 
             //mc.rotateArm(1,250);
 
@@ -93,7 +97,7 @@ public class CompetitionAutonomous extends LinearOpMode
                     //Move forward
                     mc.drive(90,.75,1000,1000,true);
                     //Move to align with pixel
-                    mc.drive(180,.5,2000,1900,true);
+                    mc.drive(180,.5,2000,1700,true);
                     mc.drive(0,0,500,0,false);
                     //Turn to face board (it tends to overshoot a lil bit)
                     mc.rotate(95,.5,4000,imu);
@@ -107,6 +111,8 @@ public class CompetitionAutonomous extends LinearOpMode
                     //Move forward
                     mc.drive(90,.75,1500,500,true);
                     mc.drive(0,0,100,0,false);
+                    //Move left to align with center of april tags
+                    mc.drive(180,.75,1000,1500,true);
                     break;
                 case 3:
                     //Move forward
@@ -174,6 +180,7 @@ public class CompetitionAutonomous extends LinearOpMode
 
              */
         }
+
 
     }
 }

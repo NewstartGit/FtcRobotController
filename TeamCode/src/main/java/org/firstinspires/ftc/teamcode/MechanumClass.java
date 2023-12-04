@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
 
 import static java.lang.Thread.sleep;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -24,7 +25,7 @@ public class MechanumClass {
     Servo backServoLeft;
     Servo backServoRight;
 
-    Servo droneServo;
+    CRServo droneServo;
 
     IMUClass imu;
 
@@ -58,7 +59,7 @@ public class MechanumClass {
         backServoLeft = hwMap.get(Servo.class, "BL_Servo");
         backServoRight = hwMap.get(Servo.class,"BR_Servo");
 
-        droneServo = hwMap.get(Servo.class,"DRONE_Servo");
+        droneServo = hwMap.get(CRServo.class,"DRONE_Servo");
 
         //handServo = hwMap.get(Servo.class, "Hand_Servo");
 
@@ -185,7 +186,11 @@ public class MechanumClass {
 
         if(droneLaunch)
         {
-            droneServo.setPosition(0.5);
+            droneServo.setPower(-.5);
+        }
+        else
+        {
+            droneServo.setPower(0);
         }
     }
 
