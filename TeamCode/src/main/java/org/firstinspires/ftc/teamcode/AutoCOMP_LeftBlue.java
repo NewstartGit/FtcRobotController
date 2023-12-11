@@ -81,7 +81,7 @@ public class AutoCOMP_LeftBlue extends LinearOpMode
                     mc.drive(0, 0, 100, 0, false);
                     mc.drive(270,.75,1000,500,true);
                     break;
-                case 2:
+                case 2: // MIDDLE
                     //Move forward
                     mc.drive(90, .75, 1000, 1000, true);
                     //Move to align with pixel
@@ -100,26 +100,27 @@ public class AutoCOMP_LeftBlue extends LinearOpMode
                     mc.drive(90, .75, 1500, 500, true);
                     mc.drive(0, 0, 500, 0, false);
 
-                    //START GOING TO PLACE z
+                    //START GOING TO PLACE PIXEL
                     //Move left to align with center of april tags
                     mc.drive(180, .75, 3500, 2100, true);
                     mc.drive(0, 0, 100, 0, false);
                     //mc.rotate(10,.5,500,imu);
                     //Move to place pixel
                     mc.drive(90,.5,3500,3200,true);
+                    mc.drive(0,0,100,0,false);
                     //Drop pixel
                     mc.drive(270,.1,1000,30,true);
                     mc.closeClaw(false,1);
                     mc.drive(0, 0, 100, 0, false);
                     mc.drive(270,.75,1000,500,true);
                     break;
-                case 3:
+                case 3:// RIGHT
                     //Move forward
                     mc.drive(90, .75, 1000, 1000, true);
                     //Turn to face board
                     mc.rotate(90, .5, 4000, imu);
                     //Move to align with pixel
-                    mc.drive(0, .5, 3000, 2800, true);
+                    mc.drive(0, .5, 3400, 3000, true);
                     mc.drive(0, 0, 500, 0, false);
                     //Back up into the pixel
                     mc.drive(270, .75, 1000, 750, true);
@@ -133,8 +134,8 @@ public class AutoCOMP_LeftBlue extends LinearOpMode
                     mc.drive(0, 0, 100, 0, false);
 
                     //START TO MOVE TO PLACE PIXEL
-                    //Move to right to align with apriltag
-                    mc.drive(180,.75,1000,100,true);
+                    //Move to left to align with apriltag
+                    mc.drive(180,.75,1000,500,true);
                     //Move forward to place pixel
                     mc.drive(90,.5,5000,3900,true);
                     //Drop pixel

@@ -16,120 +16,160 @@ public class AutoCOMP_RightRed extends LinearOpMode
     public void runOpMode() throws InterruptedException
     {
         mc.init(hardwareMap, true);
-        //aTag.initAprilTag(hardwareMap);
+
         imu.initIMU(hardwareMap);
         cam.init(hardwareMap);
-        //tensorflow.initTfod(hardwareMap);
+
+        mc.backClawClose(true,100);
+        mc.closeClaw(true,200);
+
         waitForStart();
-        //mc.backClawClose(false,1000);
 
-        if(opModeIsActive())
-        {
-            mc.backClawClose(true,500);
+        if(opModeIsActive()) {
 
-            //mc.backClawClose(false,2000);
 
-            mc.closeClaw(true,500);
-
-            mc.drive(90,.5,4000,3000,true);
-
-            mc.drive(0,.5,4000,1750,true);
-
-            mc.closeClaw(false,1);
-
-            mc.drive(270,.5,4000,1000,true);
-
-            mc.drive(0,.5,4000,5000,true);
-
-            mc.backClawClose(false,1);
-
-            mc.drive(90,.5,4000,1000,true);
-
-            //NOT WORKING :((
-            /*
+            mc.closeClaw(true, 200);
 
             int pixelPosition = 0;
 
-            mc.backClawClose(false,250);
-            mc.backClawClose(true,500);
-
-            //Raise Camera to look at pixel
-            mc.liftSlide(.25,2000,4000);
-
-            mc.rotateArm(.9,500);
+            mc.liftSlide(.5, 2400, 4500);
 
             //Scan
-            while(opModeIsActive())
-            {
-                if(pixelPosition == 0)
-                {
+            while (opModeIsActive()) {
+                if (pixelPosition == 0) {
                     //Update pixelPosition variable
                     pixelPosition = mc.returnPixelRegion(cam);
-                }
-                else
-                {
+                } else {
                     break;
                 }
-            }
-
-
-            //Retract slides to position 0
-            mc.liftSlide(.5,0,3000);
-
-            mc.rotateArm(1,500);
-            if(pixelPosition == 2)
-            {
-                mc.drive(90,.5,2000,2000,true);
-                mc.rotate(90,.5,2000,imu);
-
-                mc.drive(0,.5,1500,750,true);
-                mc.drive(270,.5,2000,2000,true);
-
-                mc.backClawClose(false,1);
-                //Thread.sleep(1000);
-
-                mc.drive(90,.5,1500,1500,true);
-
-                mc.drive(0,.5,4000,5000,true);
 
             }
 
+            mc.closeClaw(true, 1000);
 
-            /*
-            //Move forward
-            mc.drive(90,.5,1500,500,true);
+            mc.rotateArm(.75, 100);
+            mc.liftSlide(.5, 350, 2000);
 
-            //Rotate 180 degrees
-            mc.rotate(180,.5,5000,imu);
-            //Move back and place pixel on right marker
-            mc.backClawClose(false,1000);
+            //mc.closeClaw(true, 100);
+            //mc.rotateArm(1,250);
 
-            //Go park
-            mc.drive(0,.5,5000,5000,true);
+            switch (pixelPosition) {
+                case 1: // Left
+                    //Move right to align with pixel
+                    mc.drive(0,.75,2000,1000,true);
+                    //Move forward
+                    mc.drive(90, .75, 1000, 1000, true);
+                    //Turn to face board
+                    mc.rotate(-90, .5, 4000, imu);
+                    //Move to align with pixel
+                    mc.drive(180, .5, 3400, 3000, true);
+                    mc.drive(0, 0, 500, 0, false);
+                    //Back up into the pixel
+                    mc.drive(270, .75, 1500, 1400, true);
+                    mc.drive(0, 0, 500, 0, false);
+                    //Open claw
+                    mc.backClawClose(false, 1);
+                    //Prevent weird glitch
+                    mc.drive(0, 0, 200, 0, false);
+                    //Move forward
+                    mc.drive(90, .75, 2500, 2000, true);
+                    mc.drive(0, 0, 100, 0, false);
 
+                    //START TO MOVE TO PLACE PIXEL
+                    //Adjust
+                    mc.rotate(10,.25,2000,imu);
 
+                    //Move to left to align with apriltag
+                    mc.drive(180, .75, 2000, 1500, true);
+                    //Move forward to place pixel
+                    mc.drive(90, .5, 4000, 3200, true);
+                    //Drop pixel
+                    mc.drive(270, .1, 500, 30, true);
+                    mc.closeClaw(false, 1);
+                    mc.drive(0, 0, 100, 0, false);
+                    mc.drive(270, .75, 1000, 300, true);
 
-            /*
+                    break;
+                case 2: // MIDDLE
+                    //Move right to align with pixel
+                    mc.drive(0,.75,3000,1300,true);
+                    //Move forward
+                    mc.drive(90, .75, 1000, 1000, true);
+                    //Move to align with pixel
+                    //mc.drive(0, .5, 2000, 00, true);
+                    mc.drive(0, 0, 500, 0, false);
+                    //Turn to face board (it tends to overshoot a lil bit)
+                    mc.rotate(-85, .5, 4000, imu);
+                    //Move to align with apriltag
+                    mc.drive(180, .75, 3000, 2900, true);
+                    mc.drive(0, 0, 500, 0, false);
+                    //Open claw
+                    mc.backClawClose(false, 1);
+                    //Prevent weird glitch where claw movement will rotate bot
+                    mc.drive(0, 0, 500, 0, false);
+                    //Move forward
+                    mc.drive(90, .75, 1500, 500, true);
+                    mc.drive(0, 0, 500, 0, false);
 
-            int pixelPosition = 0;
-            boolean driveBool = true;
+                    //START GOING TO PLACE PIXEL
+                    //ROTATE TO CORRECT
+                    mc.rotate(10,.25,2000,imu);
+                    //Move right to align with center of april tags
+                    mc.drive(0, .75, 3500, 1300, true);
+                    mc.drive(0, 0, 100, 0, false);
+                    //mc.rotate(10,.5,500,imu);
+                    //Move to place pixel
+                    mc.drive(90, .5, 4000, 3250, true);
+                    mc.drive(0, 0, 100, 0, false);
+                    //Drop pixel
+                    mc.drive(270, .1, 1000, 30, true);
+                    mc.closeClaw(false, 1);
+                    mc.drive(0, 0, 100, 0, false);
+                    mc.drive(270, .75, 1000, 200, true);
+                    break;
+                case 3:// RIGHT
+                    //Move right
+                    mc.drive(0,.75,1000,500,true);
+                    //Move forward
+                    mc.drive(90, .75, 1000, 1000, true);
+                    //Move right to avoid hitting bar
+                    //mc.drive(0,.75,1000,250,true);
 
-            mc.liftSlide(.5,1000, 5000);
+                    //Turn around
+                    mc.rotate(-178, .75, 4000, imu);
+                    //Move to align with pixel
+                    mc.drive(180, .5, 1250, 800, true);
+                    //Back up into the pixel
+                    mc.drive(270, .75, 1000, 1000, true);
+                    mc.drive(0, 0, 100, 0, false);
+                    //Open claw
+                    mc.backClawClose(false, 10);
+                    //Prevent weird glitch
+                    mc.drive(0, 0, 100, 0, false);
+                    //Move forward
+                    mc.drive(90, .75, 500, 500, true);
+                    //Rotate facing backboard
+                    mc.rotate(105, .5, 2000, imu);
 
-            mc.rotateArm(.9);
-
-            mc.closeClaw(true);
-
-            mc.drive(0,.5,3000,1000,true);
-
-            mc.rotate(90,.5,5000,imu);
-            mc.rotate(-90,.5,5000,imu);
-
-            mc.closeClaw(false);
-
-            mc.liftSlide(.5,0,5000);
-            */
+                    //START GOING TO PLACE PIXEL
+                    //Move forward
+                    mc.drive(90,.5,2500,2000,true);
+                    //Move left
+                    mc.drive(180,.5,1500,800,true);
+                    //Move forward
+                    mc.drive(90, .5, 5000, 2700, true);
+                    //Drop pixel
+                    mc.drive(270, .1, 1000, 30, true);
+                    mc.closeClaw(false, 1);
+                    mc.drive(0, 0, 100, 0, false);
+                    mc.drive(270, .75, 1000, 200, true);
+                    break;
+                default:
+                    //mc.drive(180,.5,5000,5000,true);
+                    break;
+            }
         }
 
-    }
+
+        }
 }
