@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="((COMP)) BACKSTAGE BLUE", group="Linear Opmode")
-public class AutoCOMP_LeftBlue extends LinearOpMode
+@Autonomous(name="((COMP)) FRONTSTAGE RED", group="Linear Opmode")
+public class AutoCOMP_LeftRed extends LinearOpMode
 {
     MechanumClass mc = new MechanumClass();
     //AprilTagClass aTag = new AprilTagClass();
@@ -47,8 +47,8 @@ public class AutoCOMP_LeftBlue extends LinearOpMode
 
             mc.closeClaw(true,100);
 
-            mc.rotateArm(.75, 100);
-            mc.liftSlide(.5, 350, 2000);
+            mc.rotateArm(1, 100);
+            mc.liftSlide(.5, 0, 2000);
 
             //mc.rotateArm(1,250);
 
@@ -70,16 +70,8 @@ public class AutoCOMP_LeftBlue extends LinearOpMode
                     //Move forward
                     mc.drive(90, .75, 500, 500, true);
                     //Rotate facing backboard
-                    mc.rotate(-90, .5, 2000, imu);
+                    mc.rotate(-178, .5, 2000, imu);
 
-                    //START GOING TO PLACE PIXEL
-                    //Move forward
-                    mc.drive(90,.5,5000,4400,true);
-                    //Drop pixel
-                    mc.drive(270,.1,1000,30,true);
-                    mc.closeClaw(false,1);
-                    mc.drive(0, 0, 100, 0, false);
-                    mc.drive(270,.75,1000,500,true);
                     break;
                 case 2: // MIDDLE
                     //Move forward
@@ -100,19 +92,9 @@ public class AutoCOMP_LeftBlue extends LinearOpMode
                     mc.drive(90, .75, 1500, 500, true);
                     mc.drive(0, 0, 500, 0, false);
 
-                    //START GOING TO PLACE PIXEL
-                    //Move left to align with center of april tags
-                    mc.drive(180, .75, 3500, 2100, true);
-                    mc.drive(0, 0, 100, 0, false);
-                    //mc.rotate(10,.5,500,imu);
-                    //Move to place pixel
-                    mc.drive(90,.5,3500,3100,true);
-                    mc.drive(0,0,100,0,false);
-                    //Drop pixel
-                    mc.drive(270,.1,1000,30,true);
-                    mc.closeClaw(false,1);
-                    mc.drive(0, 0, 100, 0, false);
-                    mc.drive(270,.75,1000,500,true);
+                    //Rotate facing other side
+                    mc.rotate(-90,.5,3000,imu);
+
                     break;
                 case 3:// RIGHT
                     //Move forward
@@ -133,16 +115,8 @@ public class AutoCOMP_LeftBlue extends LinearOpMode
                     mc.drive(90, .75, 1500, 2000, true);
                     mc.drive(0, 0, 100, 0, false);
 
-                    //START TO MOVE TO PLACE PIXEL
-                    //Move to left to align with apriltag
-                    mc.drive(180,.75,1000,700,true);
-                    //Move forward to place pixel
-                    mc.drive(90,.5,5000,3900,true);
-                    //Drop pixel
-                    mc.drive(270,.1,1000,30,true);
-                    mc.closeClaw(false,1);
-                    mc.drive(0, 0, 100, 0, false);
-                    mc.drive(270,.75,1000,500,true);
+                    //Rotate facing other side
+                    mc.rotate(-90,.5,3000,imu);
 
                     break;
                 default:
