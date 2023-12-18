@@ -12,6 +12,11 @@ public class CompetitionAutonomous extends LinearOpMode
     public IMUClass imu = new IMUClass();
     //TensorflowClass tensorflow = new TensorflowClass();
     CameraClass cam = new CameraClass();
+
+    HuskyLensClass husky = new HuskyLensClass();
+
+    int pixelPosition = 0;
+
     @Override
     public void runOpMode() throws InterruptedException
     {
@@ -26,18 +31,20 @@ public class CompetitionAutonomous extends LinearOpMode
 
         waitForStart();
 
+        init_loop();
+
         if(opModeIsActive())
         {
 
 
-            int pixelPosition = 0;
+            //int pixelPosition = 0;
 
             //mc.drive(90,.5,1000,500,true);
             //mc.drive(0,.5,100,0,false);
 
-            mc.liftSlide(.5,2400,4500);
+            //mc.liftSlide(.5,2400,4500);
 
-            //mc.rotateArm(.95,3500);
+            mc.rotateArm(.7,3500);
 
             //Scan
             while(opModeIsActive())
@@ -45,7 +52,7 @@ public class CompetitionAutonomous extends LinearOpMode
                 if(pixelPosition == 0)
                 {
                     //Update pixelPosition variable
-                    pixelPosition = mc.returnPixelRegion(cam);
+                    pixelPosition = husky.runHusky();
                 }
                 else
                 {
@@ -67,31 +74,12 @@ public class CompetitionAutonomous extends LinearOpMode
                  */
             }
 
-            mc.rotateArm(.7,100);
-            mc.liftSlide(.5,100,2000);
-
             //mc.rotateArm(1,250);
 
             switch(pixelPosition)
             {
-                case 1: // Left
-                    //Move forward
-                    mc.drive(90,.75,1000,1000,true);
-                    //Turn around
-                    mc.rotate(180,.75,4000,imu);
-                    //Move to align with pixel
-                    mc.drive(0,.5,1250,1250,true);
-                    //Back up into the pixel
-                    mc.drive(270,.75,1000,1000,true);
-                    mc.drive(0,0,100,0,false);
-                    //Open claw
-                    mc.backClawClose(false,10);
-                    //Prevent weird glitch
-                    mc.drive(0,0,100,0,false);
-                    //Move forward
-                    mc.drive(90,.75,500,500,true);
-                    //Rotate facing backboard
-                    mc.rotate(-90,.5,2000,imu);
+                case 1:
+                    mc.drive(0,.75,5000,2000,true);
                     break;
                 case 2:
                     //Move forward
@@ -182,5 +170,19 @@ public class CompetitionAutonomous extends LinearOpMode
         }
 
 
+    }
+    //THIS NOT WORKING :((((
+    @Override
+    public void init_loop()
+    {
+        if(pixelPosition == 0)
+        {
+            //Update pixelPosition variable
+            pixelPosition = husky.runHusky();
+        }
+        else
+        {
+
+        }
     }
 }
