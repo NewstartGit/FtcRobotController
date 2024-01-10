@@ -38,9 +38,9 @@ public class MechanumTeleOp extends LinearOpMode
 
         while(opModeIsActive())
         {
-            double horizontal = gamepad1.left_stick_y;
+            double horizontal = -gamepad1.left_stick_y;
             double vertical = -gamepad1.left_stick_x;
-            double pivot = -gamepad1.right_stick_x;
+            double pivot = gamepad1.right_stick_x;
 
             double arm = -gamepad2.right_stick_y;
 

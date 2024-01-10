@@ -63,8 +63,8 @@ public class MechanumClass {
 
         //handServo = hwMap.get(Servo.class, "Hand_Servo");
 
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
 
         sliderRight.setDirection(DcMotor.Direction.REVERSE);
 

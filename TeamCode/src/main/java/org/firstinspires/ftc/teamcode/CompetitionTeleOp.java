@@ -35,9 +35,9 @@ public class CompetitionTeleOp extends LinearOpMode
 
         while(opModeIsActive())
         {
-            double horizontal = -gamepad1.left_stick_y;
-            double vertical = gamepad1.left_stick_x;
-            double pivot = -gamepad1.right_stick_x;
+            double horizontal = -gamepad1.left_stick_x;
+            double vertical = gamepad1.left_stick_y;
+            double pivot = gamepad1.right_stick_x;
 
             double slider = gamepad2.right_stick_y;
             //double armPivot = gamepad2.right_stick_y;
