@@ -24,7 +24,7 @@ public class RoadrunnerAutoTest extends LinearOpMode {
                 .build();
 
         // We just add a 90 degree heading rotation to traj1.end()
-        Trajectory traj2 = drive.trajectoryBuilder(traj1.end())//.plus(new Pose2d(0, 0, Math.toRadians(0))), false)
+        Trajectory traj2 = drive.trajectoryBuilder(traj1.end().plus(new Pose2d(0, 0, Math.toRadians(180))), false)
                 .back(62)
                 .build();
 
@@ -34,7 +34,7 @@ public class RoadrunnerAutoTest extends LinearOpMode {
         if(isStopRequested()) return;
 
         drive.followTrajectory(traj1);
-        //drive.turn(Math.toRadians(180));
+        drive.turn(Math.toRadians(180));
         drive.followTrajectory(traj2);
     }
 }
