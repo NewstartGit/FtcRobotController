@@ -17,7 +17,7 @@ public class RoadrunnerAutoBACKSTAGE_BLUE extends LinearOpMode {
         HuskyLensClass husky = new HuskyLensClass();
         husky.init(hardwareMap);
 
-        int pixelPosition = 3;//husky.runHusky();
+        int pixelPosition = 4;//husky.runHusky();
 
         // We want to start the bot at x: 10, y: -8, heading: 90 degrees
         Pose2d startPose = new Pose2d(-62, 12, Math.toRadians(0));
@@ -39,9 +39,13 @@ public class RoadrunnerAutoBACKSTAGE_BLUE extends LinearOpMode {
                 .lineToSplineHeading(new Pose2d(-24.5,18,Math.toRadians(90)))
                 .build();
 
+        Trajectory test = drive.trajectoryBuilder(startPose, false)
+                .lineToSplineHeading(new Pose2d(34,30,Math.toRadians(90)))
+                .build();
+
 
         robot.closeClaw(true,500);
-        robot.rotateArm(.25,1000);
+        robot.rotateArm(.4,1000);
         robot.backClawClose(true, 100);
 
 
@@ -56,15 +60,18 @@ public class RoadrunnerAutoBACKSTAGE_BLUE extends LinearOpMode {
                 robot.backClawClose(false,1000);
                 break;
             case 2:
+                drive.followTrajectory(centerSpike);
+                //robot drop pixel
+                robot.backClawClose(false, 1000);
+                break;
+            case 3:
                 drive.followTrajectory(leftSpike);
                 drive.followTrajectory(rightSpike);
                 //robot drop pixel
                 robot.backClawClose(false, 1000);
                 break;
-            case 3:
-                drive.followTrajectory(centerSpike);
-                //robot drop pixel
-                robot.backClawClose(false, 1000);
+            case 4:
+                drive.followTrajectory(test);
                 break;
             default:
                 break;

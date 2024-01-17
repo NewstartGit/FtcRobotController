@@ -70,7 +70,7 @@ public class HuskyLensClass {
 
         rateLimit.expire();
 
-        huskyLens.selectAlgorithm(HuskyLens.Algorithm.COLOR_RECOGNITION);
+        huskyLens.selectAlgorithm(HuskyLens.Algorithm.OBJECT_TRACKING);
     }
 
     public int runHusky() {
