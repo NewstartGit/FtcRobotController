@@ -82,9 +82,21 @@ public class HuskyLensClass {
         HuskyLens.Block[] blocks = huskyLens.blocks();
 
         for (int i = 0; i < blocks.length; i++) {
-            if (blocks[i].toString() == "1") {
+
+
+            if(blocks[i].x < 100) {//x < 100000
                 return 1;
             }
+            else if(blocks[i].x > 100 && blocks[i].x < 200)
+            {
+                return 2;
+            }
+            else if(blocks[i].x > 200)
+            {
+                return 3;
+            }
+
+
             //telemetry.addData("Block", blocks[i].toString());
         }
         return 0;
