@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.ScrapCode.CameraClass;
+import org.firstinspires.ftc.teamcode.ScrapCode.IMUClass;
+
 @TeleOp(name="CompetitionTeleOp", group="Linear Opmode")
 public class CompetitionTeleOp extends LinearOpMode
 {

@@ -1,9 +1,13 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.ScrapCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.CENTERSTAGE.HuskyLensClass;
+import org.firstinspires.ftc.teamcode.MechanumClass;
+
+@Disabled
 
 @Autonomous(name="Testing Autonomous", group="Linear Opmode")
 public class CompetitionAutonomous extends LinearOpMode

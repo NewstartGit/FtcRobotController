@@ -1,10 +1,15 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.ScrapCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Park Left", group="Linear Opmode")
-public class ParkLeft extends LinearOpMode
+import org.firstinspires.ftc.teamcode.MechanumClass;
+
+@Disabled
+
+@Autonomous(name="Park Right", group="Linear Opmode")
+public class ParkRight extends LinearOpMode
 {
     MechanumClass mc = new MechanumClass();
     //AprilTagClass aTag = new AprilTagClass();
@@ -25,11 +30,10 @@ public class ParkLeft extends LinearOpMode
 
         if(opModeIsActive())
         {
-            //mc.drive(180,.5,5000,7500,true);
             //mc.closeClaw(true,1000);
             //mc.drive(90,.5,3000,500,true);
-            mc.drive(180,.5,5000,7750,true);
-            mc.drive(0,.5,3000,500,true);
+            mc.drive(0,.5,5000,7750,true);
+            mc.drive(180,.5,3000,500,true);
         }
 
     }

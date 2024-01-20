@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import static java.lang.Thread.sleep;
 
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -11,7 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.ScrapCode.CameraClass;
+import org.firstinspires.ftc.teamcode.ScrapCode.IMUClass;
 
 public class MechanumClass {
     DcMotor frontLeft;

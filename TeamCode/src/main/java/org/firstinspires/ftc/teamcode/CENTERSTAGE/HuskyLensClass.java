@@ -65,12 +65,19 @@ public class HuskyLensClass {
 
     Deadline rateLimit = new Deadline(READ_PERIOD, TimeUnit.SECONDS);
 
-    public void init(HardwareMap hardwareMap) {
+    public void init(HardwareMap hardwareMap,String typeOfDuck) {
         huskyLens = hardwareMap.get(HuskyLens.class, "huskylens");
 
         rateLimit.expire();
 
-        huskyLens.selectAlgorithm(HuskyLens.Algorithm.OBJECT_TRACKING);
+        if(typeOfDuck.equalsIgnoreCase("object"))
+        {
+            huskyLens.selectAlgorithm(HuskyLens.Algorithm.OBJECT_TRACKING);
+        }
+        else if(typeOfDuck.equalsIgnoreCase("color"))
+        {
+            huskyLens.selectAlgorithm(HuskyLens.Algorithm.COLOR_RECOGNITION);
+        }
     }
 
     public int runHusky() {

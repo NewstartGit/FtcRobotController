@@ -1,53 +1,52 @@
 package org.firstinspires.ftc.teamcode.CENTERSTAGE;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Autonomous(name="Roadrunner Backstage Blue", group="Linear Opmode")
-public class RoadrunnerAutoBACKSTAGE_BLUE extends LinearOpMode {
+@Autonomous(name="Roadrunner Backstage Red", group="Linear Opmode")
+public class RoadrunnerAutoBACKSTAGE_RED extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         RobotFunctions robot = new RobotFunctions(hardwareMap);
         HuskyLensClass husky = new HuskyLensClass();
-        husky.init(hardwareMap, "color");
+        husky.init(hardwareMap,"color");
 
         int pixelPosition = 0;// = 4;//husky.runHusky();
 
         // We want to start the bot at x: 10, y: -8, heading: 90 degrees
-        Pose2d startPose = new Pose2d(-62, 12, Math.toRadians(0));
+        Pose2d startPose = new Pose2d(62, 12, Math.toRadians(180));
         drive.setPoseEstimate(startPose);
 
-        //Place Pixel position = 1
+        //Place Pixel position = 3
         Trajectory leftSpike = drive.trajectoryBuilder(startPose, false)
-                .lineToSplineHeading(new Pose2d(-34,30,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(34,30,Math.toRadians(90)))
                 .build();
-        //Place APRILTAG position = 1
+        //Place APRILTAG position = 3
         Trajectory leftAprilTag = drive.trajectoryBuilder(leftSpike.end(), false)
-                .lineToSplineHeading(new Pose2d(-44,49,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(44,49,Math.toRadians(90)))
                 .build();
-        //Back up position 1
+        //Back up position 3
         Trajectory positionOneBack = drive.trajectoryBuilder(leftAprilTag.end(), false)
                 .back(10)
                 .build();
-        //Park in corner position 1
+        //Park in corner position 3
         Trajectory positionOneParkCorner = drive.trajectoryBuilder(positionOneBack.end(), false)
-                .lineToSplineHeading(new Pose2d(-62,60,Math.toRadians(0)))
+                .lineToSplineHeading(new Pose2d(62,60,Math.toRadians(180)))
                 .build();
 
 
         //Place Pixel position = 2
         Trajectory centerSpike = drive.trajectoryBuilder(startPose, false)
-                .lineToSplineHeading(new Pose2d(-24.5,18,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(24.5,18,Math.toRadians(90)))
                 .build();
         //Place APRILTAG position = 2
         Trajectory centerAprilTag = drive.trajectoryBuilder(centerSpike.end(), false)
-                .lineToSplineHeading(new Pose2d(-36,49,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(36,49,Math.toRadians(90)))
                 .build();
         //Back up position 2
         Trajectory positionTwoBack = drive.trajectoryBuilder(centerAprilTag.end(), false)
@@ -55,25 +54,25 @@ public class RoadrunnerAutoBACKSTAGE_BLUE extends LinearOpMode {
                 .build();
         //Park in corner position 2
         Trajectory positionTwoParkCorner = drive.trajectoryBuilder(positionTwoBack.end(), false)
-                .lineToSplineHeading(new Pose2d(-62,60,Math.toRadians(0)))
+                .lineToSplineHeading(new Pose2d(62,60,Math.toRadians(180)))
                 .build();
 
 
-        //Place Pixel position = 3
+        //Place Pixel position = 1
         Trajectory rightSpike = drive.trajectoryBuilder(leftSpike.end(), false)
                 .back(22)
                 .build();
-        //Place APRILTAG position = 3
+        //Place APRILTAG position = 1
         Trajectory rightAprilTag = drive.trajectoryBuilder(rightSpike.end(), false)
-                .lineToSplineHeading(new Pose2d(-30,49,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(30,50,Math.toRadians(90)))
                 .build();
-        //Back up position 3
+        //Back up position 1
         Trajectory positionThreeBack = drive.trajectoryBuilder(rightAprilTag.end(), false)
                 .back(15)
                 .build();
-        //Park in corner position 3
+        //Park in corner position 1
         Trajectory positionThreeParkCorner = drive.trajectoryBuilder(positionThreeBack.end(), false)
-                .lineToSplineHeading(new Pose2d(-62,60,Math.toRadians(0)))
+                .lineToSplineHeading(new Pose2d(62,60,Math.toRadians(180)))
                 .build();
 
         Trajectory test = drive.trajectoryBuilder(startPose, false)
@@ -100,13 +99,13 @@ public class RoadrunnerAutoBACKSTAGE_BLUE extends LinearOpMode {
             //LEFT SPIKE
             case 1:
                 robot.liftSlide(.5, 350, 1000);
-                drive.followTrajectory(leftSpike);
+                drive.followTrajectory(rightSpike);
                 robot.backClawClose(false,1000);
                 robot.rotateArm(.75,100);
-                drive.followTrajectory(leftAprilTag);
+                drive.followTrajectory(rightAprilTag);
                 robot.closeClaw(false,100);
-                drive.followTrajectory(positionOneBack);
-                drive.followTrajectory(positionOneParkCorner);
+                drive.followTrajectory(positionThreeBack);
+                drive.followTrajectory(positionThreeParkCorner);
                 robot.liftSlide(.5, 0, 1000);
                 robot.rotateArm(1,100);
                 break;
@@ -126,13 +125,13 @@ public class RoadrunnerAutoBACKSTAGE_BLUE extends LinearOpMode {
             //RIGHT SPIKE
             case 3:
                 robot.liftSlide(.5, 350, 1000);
-                drive.followTrajectory(rightSpike);
+                drive.followTrajectory(leftSpike);
                 robot.backClawClose(false,1000);
                 robot.rotateArm(.75,100);
-                drive.followTrajectory(rightAprilTag);
+                drive.followTrajectory(leftAprilTag);
                 robot.closeClaw(false,100);
-                drive.followTrajectory(positionThreeBack);
-                drive.followTrajectory(positionThreeParkCorner);
+                drive.followTrajectory(positionOneBack);
+                drive.followTrajectory(positionOneParkCorner);
                 robot.liftSlide(.5, 0, 1000);
                 robot.rotateArm(1,100);
                 break;
