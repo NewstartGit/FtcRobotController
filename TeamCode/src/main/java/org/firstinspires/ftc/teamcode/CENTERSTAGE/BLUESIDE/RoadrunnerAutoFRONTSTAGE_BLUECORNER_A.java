@@ -1,14 +1,16 @@
-package org.firstinspires.ftc.teamcode.CENTERSTAGE;
+package org.firstinspires.ftc.teamcode.CENTERSTAGE.BLUESIDE;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.CENTERSTAGE.HuskyLensClass;
+import org.firstinspires.ftc.teamcode.CENTERSTAGE.RobotFunctions;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Autonomous(name="Roadrunner Frontstage Blue Corner", group="Linear Opmode")
-public class RoadrunnerAutoFRONTSTAGE_BLUECORNER extends LinearOpMode {
+@Autonomous(name="BLUE FS-A CORNER", group="Linear Opmode")
+public class RoadrunnerAutoFRONTSTAGE_BLUECORNER_A extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -34,14 +36,26 @@ public class RoadrunnerAutoFRONTSTAGE_BLUECORNER extends LinearOpMode {
         Trajectory positionThreeToRightCorner = drive.trajectoryBuilder(positionThreeForward.end(), false)
                 .lineToSplineHeading(new Pose2d(-60,-62,Math.toRadians(-270)))
                 .build();
+        //Align with the backdrop
+        Trajectory positionThreeAlignBackdrop = drive.trajectoryBuilder(positionThreeToRightCorner.end(), false)
+                .lineToSplineHeading(new Pose2d(-60,24,Math.toRadians(-270)))
+                .build();
+        //Place APRILTAG position = 3
+        Trajectory rightAprilTag = drive.trajectoryBuilder(positionThreeAlignBackdrop.end(), false)
+                .lineToSplineHeading(new Pose2d(-30,49,Math.toRadians(90)))
+                .build();
+        //Back up position 3
+        Trajectory positionThreeBack = drive.trajectoryBuilder(rightAprilTag.end(), false)
+                .back(15)
+                .build();
         //Go into backstage corner
-        Trajectory positionThreeToBackStageCorner = drive.trajectoryBuilder(positionThreeToRightCorner.end(), false)
-                .lineToSplineHeading(new Pose2d(-60,55,Math.toRadians(-270)))
+        Trajectory positionThreeCorner = drive.trajectoryBuilder(positionThreeBack.end(), false)
+                .lineToSplineHeading(new Pose2d(-62,50,Math.toRadians(-270)))
                 .build();
-        //Adjust backstage corner
-        Trajectory positionThreeAdjustCorner = drive.trajectoryBuilder(positionThreeToBackStageCorner.end(), false)
-                .lineToSplineHeading(new Pose2d(-62,55,Math.toRadians(-270)))
-                .build();
+
+
+
+
 
         //Place Pixel position = 2
         Trajectory centerSpike = drive.trajectoryBuilder(startPose, false)
@@ -55,14 +69,25 @@ public class RoadrunnerAutoFRONTSTAGE_BLUECORNER extends LinearOpMode {
         Trajectory positionTwoToRightCorner = drive.trajectoryBuilder(positionTwoForward.end(), false)
                 .lineToSplineHeading(new Pose2d(-60,-62,Math.toRadians(-270)))
                 .build();
+        //Align backdrop
+        Trajectory positionTwoAlignBackdrop = drive.trajectoryBuilder(positionTwoToRightCorner.end(), false)
+                .lineToSplineHeading(new Pose2d(-60,24,Math.toRadians(-270)))
+                .build();
+        //Place APRILTAG position = 2
+        Trajectory centerAprilTag = drive.trajectoryBuilder(positionTwoAlignBackdrop.end(), false)
+                .lineToSplineHeading(new Pose2d(-36,49,Math.toRadians(90)))
+                .build();
+        //Back up position 2
+        Trajectory positionTwoBack = drive.trajectoryBuilder(centerAprilTag.end(), false)
+                .back(15)
+                .build();
         //Go into backstage corner
-        Trajectory positionTwoToBackStageCorner = drive.trajectoryBuilder(positionTwoToRightCorner.end(), false)
-                .lineToSplineHeading(new Pose2d(-60,55,Math.toRadians(-270)))
+        Trajectory positionTwoCorner = drive.trajectoryBuilder(positionTwoBack.end(), false)
+                .lineToSplineHeading(new Pose2d(-62,50,Math.toRadians(-270)))
                 .build();
-        //Adjust backstage corner
-        Trajectory positionTwoAdjustCorner = drive.trajectoryBuilder(positionTwoToBackStageCorner.end(), false)
-                .lineToSplineHeading(new Pose2d(-62,55,Math.toRadians(-270)))
-                .build();
+
+
+
 
 
         //Place Pixel position = 1
@@ -77,17 +102,21 @@ public class RoadrunnerAutoFRONTSTAGE_BLUECORNER extends LinearOpMode {
         Trajectory positionOneToRightCorner = drive.trajectoryBuilder(positionOneForward.end(), false)
                 .lineToSplineHeading(new Pose2d(-60,-62,Math.toRadians(-270)))
                 .build();
+        //Align with the backdrop
+        Trajectory positionOneAlignBackdrop = drive.trajectoryBuilder(positionOneToRightCorner.end(), false)
+                .lineToSplineHeading(new Pose2d(-60,24,Math.toRadians(-270)))
+                .build();
+        //Place APRILTAG position = 1
+        Trajectory leftAprilTag = drive.trajectoryBuilder(positionOneAlignBackdrop.end(), false)
+                .lineToSplineHeading(new Pose2d(-42,49.5,Math.toRadians(90)))
+                .build();
+        //Back up position 1
+        Trajectory positionOneBack = drive.trajectoryBuilder(leftAprilTag.end(), false)
+                .back(15)
+                .build();
         //Go into backstage corner
-        Trajectory positionOneToBackStageCorner = drive.trajectoryBuilder(positionOneToRightCorner.end(), false)
-                .lineToSplineHeading(new Pose2d(-60,55,Math.toRadians(-270)))
-                .build();
-        //Adjust backstage corner
-        Trajectory positionOneAdjustCorner = drive.trajectoryBuilder(positionOneToBackStageCorner.end(), false)
-                .lineToSplineHeading(new Pose2d(-62,55,Math.toRadians(-270)))
-                .build();
-
-        Trajectory test = drive.trajectoryBuilder(startPose, false)
-                .lineToSplineHeading(new Pose2d(34,30,Math.toRadians(90)))
+        Trajectory positionOneCorner = drive.trajectoryBuilder(positionOneBack.end(), false)
+                .lineToSplineHeading(new Pose2d(-62,50,Math.toRadians(-270)))
                 .build();
 
         //Robot closes both claws and reveals the huskylens
@@ -117,9 +146,16 @@ public class RoadrunnerAutoFRONTSTAGE_BLUECORNER extends LinearOpMode {
                 robot.backClawClose(false,1000);
                 drive.followTrajectory(positionOneForward);
                 drive.followTrajectory(positionOneToRightCorner);
-                sleep(10000);
-                drive.followTrajectory(positionOneToBackStageCorner);
-                drive.followTrajectory(positionOneAdjustCorner);
+                sleep(3000);
+                drive.followTrajectory(positionOneAlignBackdrop);
+                robot.liftSlide(.5,550,1000);
+                robot.rotateArm(.75,100);
+                drive.followTrajectory(leftAprilTag);
+                robot.closeClaw(false,10);
+                drive.followTrajectory(positionOneBack);
+                robot.liftSlide(.5, 0, 2000);
+                robot.rotateArm(1,100);
+                drive.followTrajectory(positionOneCorner);
                 break;
             //CENTER SPIKE
             case 2:
@@ -130,9 +166,16 @@ public class RoadrunnerAutoFRONTSTAGE_BLUECORNER extends LinearOpMode {
                 robot.rotateArm(1,1000);
                 drive.followTrajectory(positionTwoForward);
                 drive.followTrajectory(positionTwoToRightCorner);
-                sleep(10000);
-                drive.followTrajectory(positionTwoToBackStageCorner);
-                drive.followTrajectory(positionTwoAdjustCorner);
+                sleep(3000);
+                drive.followTrajectory(positionTwoAlignBackdrop);
+                robot.liftSlide(.5,550,1000);
+                robot.rotateArm(.75,100);
+                drive.followTrajectory(centerAprilTag);
+                robot.closeClaw(false,10);
+                drive.followTrajectory(positionTwoBack);
+                robot.liftSlide(.5, 0, 2000);
+                robot.rotateArm(1,100);
+                drive.followTrajectory(positionTwoCorner);
                 break;
             //RIGHT SPIKE
             case 3:
@@ -143,13 +186,19 @@ public class RoadrunnerAutoFRONTSTAGE_BLUECORNER extends LinearOpMode {
                 robot.rotateArm(1,1000);
                 drive.followTrajectory(positionThreeForward);
                 drive.followTrajectory(positionThreeToRightCorner);
-                sleep(10000);
-                drive.followTrajectory(positionThreeToBackStageCorner);
-                drive.followTrajectory(positionThreeAdjustCorner);
+                sleep(3000);
+                drive.followTrajectory(positionThreeAlignBackdrop);
+                robot.liftSlide(.5,550,1000);
+                robot.rotateArm(.75,100);
+                drive.followTrajectory(rightAprilTag);
+                robot.closeClaw(false,10);
+                drive.followTrajectory(positionThreeBack);
+                robot.liftSlide(.5, 0, 2000);
+                robot.rotateArm(1,100);
+                drive.followTrajectory(positionThreeCorner);
                 break;
             //TEST CASE
             case 4:
-                drive.followTrajectory(test);
                 break;
             //IF IT IS 0 (This should not run ever)
             default:
