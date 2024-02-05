@@ -19,7 +19,8 @@ public class MechanumClass {
     DcMotor sliderRight;
     DcMotor sliderLeft;
     Servo pivotServo;
-    Servo clawServo;
+    Servo leftClawServo;
+    Servo rightClawServo;
     Servo backServoLeft;
     Servo backServoRight;
 
@@ -53,7 +54,9 @@ public class MechanumClass {
         sliderLeft = hwMap.get(DcMotor.class, "L_Slider");
 
         pivotServo = hwMap.get(Servo.class, "PIVOT_Servo");
-        clawServo = hwMap.get(Servo.class, "CLAW_Servo");
+        leftClawServo = hwMap.get(Servo.class, "LEFT_CLAW_Servo");
+        rightClawServo = hwMap.get(Servo.class, "RIGHT_CLAW_Servo");
+
         backServoLeft = hwMap.get(Servo.class, "BL_Servo");
         backServoRight = hwMap.get(Servo.class,"BR_Servo");
 
@@ -97,12 +100,11 @@ public class MechanumClass {
 
     }
 
-    public void teleOP(double power, double pivot, double vertical, double horizontal, double slider, boolean intakeClose, boolean intakeOpen, boolean pivotUp, boolean pivotDown, boolean pivotRestart, boolean backIntakeClose, boolean backIntakeOpen,boolean droneLaunch,boolean droneLaunchClose)
+    public void teleOP(double power, double pivot, double vertical, double horizontal, double slider, float leftIntakeClose, boolean leftIntakeOpen, float rightIntakeClose, boolean rightIntakeOpen, boolean pivotUp, boolean pivotDown, boolean pivotRestart, boolean backIntakeClose, boolean backIntakeOpen,boolean droneLaunch,boolean droneLaunchClose)
     {
         //, double arm, boolean open, boolean close, CameraClass aTag, boolean bumperPressed) {
 
         double pivotPosition = pivotServo.getPosition();
-        boolean servoTrigger = !intakeOpen;
         double sliderPower = 0.75;
         int sliderLimit = 3000;
         /*
@@ -160,15 +162,25 @@ public class MechanumClass {
             sliderLeft.setPower(0.05);
         }
 
-        if(intakeClose)
+        if(leftIntakeClose > 0)
         {
             //servo close
-            clawServo.setPosition(0);
+            leftClawServo.setPosition(0);
         }
-        else if(intakeOpen)
+        else if(leftIntakeOpen)
         {
             //servo open
-            clawServo.setPosition(1);
+            leftClawServo.setPosition(1);
+        }
+        if(rightIntakeClose > 0)
+        {
+            //servo close
+            rightClawServo.setPosition(1);
+        }
+        else if(rightIntakeOpen)
+        {
+            //servo open
+            rightClawServo.setPosition(0);
         }
 
         if(backIntakeClose)
@@ -223,9 +235,13 @@ public class MechanumClass {
         {
             return sliderLeft.getPower();
         }
-        else if(hardware.equalsIgnoreCase("Front Claw"))
+        else if(hardware.equalsIgnoreCase("Left Front Claw"))
         {
-            return clawServo.getPosition();
+            return leftClawServo.getPosition();
+        }
+        else if(hardware.equalsIgnoreCase("Right Front Claw"))
+        {
+            return rightClawServo.getPosition();
         }
         else if(hardware.equalsIgnoreCase("imu"))
         {
@@ -407,6 +423,7 @@ public class MechanumClass {
 
         Thread.sleep(delay);
     }
+    /*
     public void closeClaw(boolean clawState, long delay) throws InterruptedException
     {
         if(clawState)
@@ -419,6 +436,8 @@ public class MechanumClass {
         }
         Thread.sleep(delay);
     }
+
+     */
     public void backClawClose(boolean clawState,long delay) throws InterruptedException
     {
         if(clawState)

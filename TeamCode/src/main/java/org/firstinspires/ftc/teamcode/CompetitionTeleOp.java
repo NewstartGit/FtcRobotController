@@ -45,8 +45,11 @@ public class CompetitionTeleOp extends LinearOpMode
             double slider = gamepad2.right_stick_y;
             //double armPivot = gamepad2.right_stick_y;
 
-            boolean intakeOpen = gamepad2.right_bumper;
-            boolean intakeClose = gamepad2.left_bumper;
+            boolean leftIntakeOpen = gamepad2.left_bumper;
+            float leftIntakeClose = gamepad2.left_trigger;
+
+            boolean rightIntakeOpen = gamepad2.right_bumper;
+            float rightIntakeClose = gamepad2.right_trigger;
 
             boolean backIntakeOpen = gamepad1.right_bumper;
             boolean backIntakeClose = gamepad1.left_bumper;
@@ -67,7 +70,22 @@ public class CompetitionTeleOp extends LinearOpMode
                 power-=.25;
             }
 
-            drive.teleOP(power,pivot,vertical,horizontal,slider,intakeClose,intakeOpen,pivotUp,pivotSmallUp,pivotRestart,backIntakeClose,backIntakeOpen,droneLaunch,droneLaunchClose);
+            drive.teleOP(power,
+                    pivot,
+                    vertical,
+                    horizontal,
+                    slider,
+                    leftIntakeClose,
+                    leftIntakeOpen,
+                    rightIntakeClose,
+                    rightIntakeOpen,
+                    pivotUp,
+                    pivotSmallUp,
+                    pivotRestart,
+                    backIntakeClose,
+                    backIntakeOpen,
+                    droneLaunch,
+                    droneLaunchClose);
             /*
             telemetry.addData("x1 encoder val", drive.getEncoderVal("x1"));
             telemetry.addData("x2 encoder val", drive.getEncoderVal("x2"));
@@ -89,7 +107,8 @@ public class CompetitionTeleOp extends LinearOpMode
             telemetry.addData("Left Claw: ", drive.returnTelemetry("Left Claw"));
             telemetry.addData("Right Slide: ", drive.returnTelemetry("Right Slide"));
             telemetry.addData("Left Slider: ", drive.returnTelemetry("Left Slide"));
-            telemetry.addData("Front Claw: ", drive.returnTelemetry("Front Claw"));
+            telemetry.addData("Left Front Claw: ", drive.returnTelemetry("Left Front Claw"));
+            telemetry.addData("Right Front Claw: ", drive.returnTelemetry("Right Front Claw"));
             telemetry.addData("Heading: ", drive.returnTelemetry("imu"));
 
             telemetry.update();

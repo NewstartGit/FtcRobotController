@@ -9,7 +9,8 @@ public class RobotFunctions {
     DcMotor sliderRight;
     DcMotor sliderLeft;
     Servo pivotServo;
-    Servo clawServo;
+    Servo leftClawServo;
+    Servo rightClawServo;
     Servo backServoLeft;
     Servo backServoRight;
 
@@ -20,7 +21,7 @@ public class RobotFunctions {
         sliderLeft = hwMap.get(DcMotor.class, "L_Slider");
 
         pivotServo = hwMap.get(Servo.class, "PIVOT_Servo");
-        clawServo = hwMap.get(Servo.class, "CLAW_Servo");
+        leftClawServo = hwMap.get(Servo.class, "CLAW_Servo");
         backServoLeft = hwMap.get(Servo.class, "BL_Servo");
         backServoRight = hwMap.get(Servo.class,"BR_Servo");
 
@@ -59,11 +60,13 @@ public class RobotFunctions {
     {
         if(clawState)
         {
-            clawServo.setPosition(1);
+            leftClawServo.setPosition(1);
+            rightClawServo.setPosition(0);
         }
         else
         {
-            clawServo.setPosition(0);
+            leftClawServo.setPosition(0);
+            rightClawServo.setPosition(1);
         }
         Thread.sleep(delay);
     }
