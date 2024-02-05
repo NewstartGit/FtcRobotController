@@ -16,7 +16,7 @@ public class RoadrunnerAutoFRONTSTAGE_REDCORNER_A extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         RobotFunctions robot = new RobotFunctions(hardwareMap);
         HuskyLensClass husky = new HuskyLensClass();
-        husky.init(hardwareMap,"color");
+        husky.init(hardwareMap,"red");
 
         int pixelPosition = 0;// = 4;//husky.runHusky();
 

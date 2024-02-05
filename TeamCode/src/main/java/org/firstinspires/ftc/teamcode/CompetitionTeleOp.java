@@ -56,6 +56,7 @@ public class CompetitionTeleOp extends LinearOpMode
             boolean pivotRestart = gamepad2.dpad_down;
 
             boolean droneLaunch = gamepad2.x;
+            boolean droneLaunchClose = gamepad2.a;
 
             if(gamepad1.dpad_up && power != 1)
             {
@@ -66,7 +67,7 @@ public class CompetitionTeleOp extends LinearOpMode
                 power-=.25;
             }
 
-            drive.teleOP(power,pivot,vertical,horizontal,slider,intakeClose,intakeOpen,pivotUp,pivotSmallUp,pivotRestart,backIntakeClose,backIntakeOpen,droneLaunch);
+            drive.teleOP(power,pivot,vertical,horizontal,slider,intakeClose,intakeOpen,pivotUp,pivotSmallUp,pivotRestart,backIntakeClose,backIntakeOpen,droneLaunch,droneLaunchClose);
             /*
             telemetry.addData("x1 encoder val", drive.getEncoderVal("x1"));
             telemetry.addData("x2 encoder val", drive.getEncoderVal("x2"));

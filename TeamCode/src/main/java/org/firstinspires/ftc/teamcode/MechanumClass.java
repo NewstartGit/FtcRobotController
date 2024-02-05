@@ -97,7 +97,7 @@ public class MechanumClass {
 
     }
 
-    public void teleOP(double power, double pivot, double vertical, double horizontal, double slider, boolean intakeClose, boolean intakeOpen, boolean pivotUp, boolean pivotDown, boolean pivotRestart, boolean backIntakeClose, boolean backIntakeOpen,boolean droneLaunch)
+    public void teleOP(double power, double pivot, double vertical, double horizontal, double slider, boolean intakeClose, boolean intakeOpen, boolean pivotUp, boolean pivotDown, boolean pivotRestart, boolean backIntakeClose, boolean backIntakeOpen,boolean droneLaunch,boolean droneLaunchClose)
     {
         //, double arm, boolean open, boolean close, CameraClass aTag, boolean bumperPressed) {
 
@@ -163,7 +163,7 @@ public class MechanumClass {
         if(intakeClose)
         {
             //servo close
-            clawServo.setPosition(.5);
+            clawServo.setPosition(0);
         }
         else if(intakeOpen)
         {
@@ -173,23 +173,28 @@ public class MechanumClass {
 
         if(backIntakeClose)
         {
-            backServoLeft.setPosition(.25);
-            backServoRight.setPosition(.25);
+            backServoLeft.setPosition(.3);
+            backServoRight.setPosition(.65);
         }
         else if(backIntakeOpen)
         {
             backServoLeft.setPosition(0);
-            backServoRight.setPosition(0);
+            backServoRight.setPosition(1);
         }
 
         if(droneLaunch)
         {
-            droneServo.setPower(-.5);
+            droneServo.setPower(.75);
+        }
+        else if(droneLaunchClose)
+        {
+            droneServo.setPower(-0.75);
         }
         else
         {
             droneServo.setPower(0);
         }
+
     }
 
     public IMUClass returnIMU(IMUClass imuImport) throws InterruptedException {

@@ -16,7 +16,7 @@ public class RoadrunnerAutoBACKSTAGE_RED_CORNER extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         RobotFunctions robot = new RobotFunctions(hardwareMap);
         HuskyLensClass husky = new HuskyLensClass();
-        husky.init(hardwareMap,"color");
+        husky.init(hardwareMap,"red");
 
         int pixelPosition = 0;// = 4;//husky.runHusky();
 
@@ -83,11 +83,12 @@ public class RoadrunnerAutoBACKSTAGE_RED_CORNER extends LinearOpMode {
 
         //Robot closes both claws and reveals the huskylens
         robot.closeClaw(true,500);
-        robot.rotateArm(.4,1000);
         robot.backClawClose(true, 100);
 
         waitForStart();
         if(isStopRequested()) return;
+
+        robot.rotateArm(.4,1000);
 
         //When OpMode starts, run husky lens with the loop and leave once it returns anything other than 0
         while(pixelPosition == 0)

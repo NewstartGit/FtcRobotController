@@ -62,6 +62,8 @@ public class HuskyLensClass {
 
     private HuskyLens huskyLens;
 
+    boolean isBlue;
+
 
     Deadline rateLimit = new Deadline(READ_PERIOD, TimeUnit.SECONDS);
 
@@ -70,13 +72,15 @@ public class HuskyLensClass {
 
         rateLimit.expire();
 
-        if(typeOfDuck.equalsIgnoreCase("object"))
-        {
-            huskyLens.selectAlgorithm(HuskyLens.Algorithm.OBJECT_TRACKING);
-        }
-        else if(typeOfDuck.equalsIgnoreCase("color"))
+        if(typeOfDuck.equalsIgnoreCase("red"))
         {
             huskyLens.selectAlgorithm(HuskyLens.Algorithm.COLOR_RECOGNITION);
+            isBlue = false;
+        }
+        else if(typeOfDuck.equalsIgnoreCase("blue"))
+        {
+            huskyLens.selectAlgorithm(HuskyLens.Algorithm.COLOR_RECOGNITION);
+            isBlue = true;
         }
     }
 
@@ -90,20 +94,25 @@ public class HuskyLensClass {
 
         for (int i = 0; i < blocks.length; i++) {
 
-
-            if(blocks[i].x < 100) {//x < 100000
-                return 1;
+            if(isBlue && blocks[i].id == 1) {
+                if (blocks[i].x < 100) {//x < 100000
+                    return 1;
+                } else if (blocks[i].x > 100 && blocks[i].x < 200) {
+                    return 2;
+                } else if (blocks[i].x > 200) {
+                    return 3;
+                }
             }
-            else if(blocks[i].x > 100 && blocks[i].x < 200)
+            else if(!isBlue && blocks[i].id == 2)
             {
-                return 2;
+                if (blocks[i].x < 100) {//x < 100000
+                    return 1;
+                } else if (blocks[i].x > 100 && blocks[i].x < 200) {
+                    return 2;
+                } else if (blocks[i].x > 200) {
+                    return 3;
+                }
             }
-            else if(blocks[i].x > 200)
-            {
-                return 3;
-            }
-
-
             //telemetry.addData("Block", blocks[i].toString());
         }
         return 0;

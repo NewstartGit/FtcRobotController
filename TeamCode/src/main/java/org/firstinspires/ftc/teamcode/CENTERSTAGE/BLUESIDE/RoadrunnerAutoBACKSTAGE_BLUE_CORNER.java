@@ -17,7 +17,7 @@ public class RoadrunnerAutoBACKSTAGE_BLUE_CORNER extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         RobotFunctions robot = new RobotFunctions(hardwareMap);
         HuskyLensClass husky = new HuskyLensClass();
-        husky.init(hardwareMap, "color");
+        husky.init(hardwareMap, "blue");
 
         int pixelPosition = 0;// = 4;//husky.runHusky();
 
@@ -31,7 +31,7 @@ public class RoadrunnerAutoBACKSTAGE_BLUE_CORNER extends LinearOpMode {
                 .build();
         //Place APRILTAG position = 1
         Trajectory leftAprilTag = drive.trajectoryBuilder(leftSpike.end(), false)
-                .lineToSplineHeading(new Pose2d(-44,49,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(-44,50,Math.toRadians(90)))
                 .build();
         //Back up position 1
         Trajectory positionOneBack = drive.trajectoryBuilder(leftAprilTag.end(), false)
@@ -49,7 +49,7 @@ public class RoadrunnerAutoBACKSTAGE_BLUE_CORNER extends LinearOpMode {
                 .build();
         //Place APRILTAG position = 2
         Trajectory centerAprilTag = drive.trajectoryBuilder(centerSpike.end(), false)
-                .lineToSplineHeading(new Pose2d(-36,49,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(-36,50,Math.toRadians(90)))
                 .build();
         //Back up position 2
         Trajectory positionTwoBack = drive.trajectoryBuilder(centerAprilTag.end(), false)
@@ -67,7 +67,7 @@ public class RoadrunnerAutoBACKSTAGE_BLUE_CORNER extends LinearOpMode {
                 .build();
         //Place APRILTAG position = 3
         Trajectory rightAprilTag = drive.trajectoryBuilder(rightSpike.end(), false)
-                .lineToSplineHeading(new Pose2d(-30,49,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(-30,50,Math.toRadians(90)))
                 .build();
         //Back up position 3
         Trajectory positionThreeBack = drive.trajectoryBuilder(rightAprilTag.end(), false)
@@ -84,11 +84,13 @@ public class RoadrunnerAutoBACKSTAGE_BLUE_CORNER extends LinearOpMode {
 
         //Robot closes both claws and reveals the huskylens
         robot.closeClaw(true,500);
-        robot.rotateArm(.4,1000);
         robot.backClawClose(true, 100);
 
         waitForStart();
         if(isStopRequested()) return;
+
+        robot.rotateArm(.4,1000);
+
 
         //When OpMode starts, run husky lens with the loop and leave once it returns anything other than 0
         while(pixelPosition == 0)
