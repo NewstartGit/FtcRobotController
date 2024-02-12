@@ -139,15 +139,15 @@ public class MechanumClass {
         */
         if(pivotUp)
         {
-            pivotServo.setPosition(.75);
+            pivotServo.setPosition(.34);
         }
         else if(pivotDown)
         {
-            pivotServo.setPosition(.9);
+            pivotServo.setPosition(.2);
         }
         else if(pivotRestart)
         {
-            pivotServo.setPosition(1);
+            pivotServo.setPosition(0);
         }
 
 
@@ -423,21 +423,21 @@ public class MechanumClass {
 
         Thread.sleep(delay);
     }
-    /*
+
     public void closeClaw(boolean clawState, long delay) throws InterruptedException
     {
         if(clawState)
         {
-            clawServo.setPosition(1);
+            leftClawServo.setPosition(1);
         }
         else
         {
-            clawServo.setPosition(0);
+            leftClawServo.setPosition(0);
         }
         Thread.sleep(delay);
     }
 
-     */
+
     public void backClawClose(boolean clawState,long delay) throws InterruptedException
     {
         if(clawState)

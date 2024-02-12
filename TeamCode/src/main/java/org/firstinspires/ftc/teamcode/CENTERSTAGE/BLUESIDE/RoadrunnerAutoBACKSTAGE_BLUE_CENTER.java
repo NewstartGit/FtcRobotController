@@ -104,12 +104,12 @@ public class RoadrunnerAutoBACKSTAGE_BLUE_CENTER extends LinearOpMode {
                 robot.liftSlide(.5, 350, 1000);
                 drive.followTrajectory(leftSpike);
                 robot.backClawClose(false,1000);
-                robot.rotateArm(.75,100);
+                robot.rotateArm(.34,100);
                 drive.followTrajectory(leftAprilTag);
                 robot.closeClaw(false,100);
                 drive.followTrajectory(positionOneBack);
                 robot.liftSlide(.5, 0, 1000);
-                robot.rotateArm(1,100);
+                robot.rotateArm(0,100);
                 drive.followTrajectory(positionOneParkCenter);
 
                 break;
@@ -118,12 +118,12 @@ public class RoadrunnerAutoBACKSTAGE_BLUE_CENTER extends LinearOpMode {
                 robot.liftSlide(.5, 350, 1000);
                 drive.followTrajectory(centerSpike);
                 robot.backClawClose(false,1000);
-                robot.rotateArm(.75,100);
+                robot.rotateArm(.34,100);
                 drive.followTrajectory(centerAprilTag);
                 robot.closeClaw(false,100);
                 drive.followTrajectory(positionTwoBack);
                 robot.liftSlide(.5, 0, 1000);
-                robot.rotateArm(1,100);
+                robot.rotateArm(0,100);
                 drive.followTrajectory(positionTwoParkCenter);
 
                 break;
@@ -132,12 +132,12 @@ public class RoadrunnerAutoBACKSTAGE_BLUE_CENTER extends LinearOpMode {
                 robot.liftSlide(.5, 350, 1000);
                 drive.followTrajectory(rightSpike);
                 robot.backClawClose(false,1000);
-                robot.rotateArm(.75,100);
+                robot.rotateArm(.34,100);
                 drive.followTrajectory(rightAprilTag);
                 robot.closeClaw(false,100);
                 drive.followTrajectory(positionThreeBack);
                 robot.liftSlide(.5, 0, 1000);
-                robot.rotateArm(1,100);
+                robot.rotateArm(0,100);
                 drive.followTrajectory(positionThreeParkCenter);
                 break;
             //TEST CASE

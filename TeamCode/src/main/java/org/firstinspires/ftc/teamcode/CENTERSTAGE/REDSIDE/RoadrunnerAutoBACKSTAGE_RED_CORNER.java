@@ -30,7 +30,7 @@ public class RoadrunnerAutoBACKSTAGE_RED_CORNER extends LinearOpMode {
                 .build();
         //Place APRILTAG position = 3
         Trajectory leftAprilTag = drive.trajectoryBuilder(leftSpike.end(), false)
-                .lineToSplineHeading(new Pose2d(44,49,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(44,48.5,Math.toRadians(90)))
                 .build();
         //Back up position 3
         Trajectory positionOneBack = drive.trajectoryBuilder(leftAprilTag.end(), false)
@@ -48,7 +48,7 @@ public class RoadrunnerAutoBACKSTAGE_RED_CORNER extends LinearOpMode {
                 .build();
         //Place APRILTAG position = 2
         Trajectory centerAprilTag = drive.trajectoryBuilder(centerSpike.end(), false)
-                .lineToSplineHeading(new Pose2d(36,49,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(36,48.5,Math.toRadians(90)))
                 .build();
         //Back up position 2
         Trajectory positionTwoBack = drive.trajectoryBuilder(centerAprilTag.end(), false)
@@ -66,7 +66,7 @@ public class RoadrunnerAutoBACKSTAGE_RED_CORNER extends LinearOpMode {
                 .build();
         //Place APRILTAG position = 1
         Trajectory rightAprilTag = drive.trajectoryBuilder(rightSpike.end(), false)
-                .lineToSplineHeading(new Pose2d(30,50,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(30,48.5,Math.toRadians(90)))
                 .build();
         //Back up position 1
         Trajectory positionThreeBack = drive.trajectoryBuilder(rightAprilTag.end(), false)
@@ -104,39 +104,39 @@ public class RoadrunnerAutoBACKSTAGE_RED_CORNER extends LinearOpMode {
                 robot.liftSlide(.5, 350, 1000);
                 drive.followTrajectory(rightSpike);
                 robot.backClawClose(false,1000);
-                robot.rotateArm(.75,100);
+                robot.rotateArm(.34,100);
                 drive.followTrajectory(rightAprilTag);
                 robot.closeClaw(false,100);
                 drive.followTrajectory(positionThreeBack);
                 drive.followTrajectory(positionThreeParkCorner);
                 robot.liftSlide(.5, 0, 1000);
-                robot.rotateArm(1,100);
+                robot.rotateArm(0,100);
                 break;
             //CENTER SPIKE
             case 2:
                 robot.liftSlide(.5, 350, 1000);
                 drive.followTrajectory(centerSpike);
                 robot.backClawClose(false,1000);
-                robot.rotateArm(.75,100);
+                robot.rotateArm(.34,100);
                 drive.followTrajectory(centerAprilTag);
                 robot.closeClaw(false,100);
                 drive.followTrajectory(positionTwoBack);
                 drive.followTrajectory(positionTwoParkCorner);
                 robot.liftSlide(.5, 0, 1000);
-                robot.rotateArm(1,100);
+                robot.rotateArm(0,100);
                 break;
             //RIGHT SPIKE
             case 3:
                 robot.liftSlide(.5, 350, 1000);
                 drive.followTrajectory(leftSpike);
                 robot.backClawClose(false,1000);
-                robot.rotateArm(.75,100);
+                robot.rotateArm(.34,100);
                 drive.followTrajectory(leftAprilTag);
                 robot.closeClaw(false,100);
                 drive.followTrajectory(positionOneBack);
                 drive.followTrajectory(positionOneParkCorner);
                 robot.liftSlide(.5, 0, 1000);
-                robot.rotateArm(1,100);
+                robot.rotateArm(0,100);
                 break;
             //TEST CASE
             case 4:

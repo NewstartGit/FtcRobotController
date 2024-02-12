@@ -21,7 +21,8 @@ public class RobotFunctions {
         sliderLeft = hwMap.get(DcMotor.class, "L_Slider");
 
         pivotServo = hwMap.get(Servo.class, "PIVOT_Servo");
-        leftClawServo = hwMap.get(Servo.class, "CLAW_Servo");
+        leftClawServo = hwMap.get(Servo.class, "LEFT_CLAW_Servo");
+        rightClawServo = hwMap.get(Servo.class,"RIGHT_CLAW_Servo");
         backServoLeft = hwMap.get(Servo.class, "BL_Servo");
         backServoRight = hwMap.get(Servo.class,"BR_Servo");
 
@@ -52,6 +53,7 @@ public class RobotFunctions {
     public void rotateArm(double servoPosition, long delay) throws InterruptedException
     {
         //1 is default, .9 is slightly up, .75 is for board
+        //Axon 0 is default
         pivotServo.setPosition(servoPosition);
 
         Thread.sleep(delay);
@@ -61,12 +63,10 @@ public class RobotFunctions {
         if(clawState)
         {
             leftClawServo.setPosition(1);
-            rightClawServo.setPosition(0);
         }
         else
         {
             leftClawServo.setPosition(0);
-            rightClawServo.setPosition(1);
         }
         Thread.sleep(delay);
     }
@@ -74,13 +74,13 @@ public class RobotFunctions {
     {
         if(clawState)
         {
-            backServoLeft.setPosition(.25);
-            backServoRight.setPosition(.25);
+            backServoLeft.setPosition(.3);
+            backServoRight.setPosition(.65);
         }
         else
         {
             backServoLeft.setPosition(0);
-            backServoRight.setPosition(0);
+            backServoRight.setPosition(1);
         }
         Thread.sleep(delay);
     }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.CENTERSTAGE.BLUESIDE;
+package org.firstinspires.ftc.teamcode.CENTERSTAGE.BLUESIDE.C_SIDE;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.CENTERSTAGE.HuskyLensClass;
 import org.firstinspires.ftc.teamcode.CENTERSTAGE.RobotFunctions;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Autonomous(name="BLUE FS-A CORNER", group="Linear Opmode")
-public class RoadrunnerAutoFRONTSTAGE_BLUECORNER_A extends LinearOpMode {
+@Autonomous(name="BLUE FS-C CORNER", group="Linear Opmode")
+public class RoadrunnerAutoFRONTSTAGE_BLUECORNER_C extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -59,7 +59,7 @@ public class RoadrunnerAutoFRONTSTAGE_BLUECORNER_A extends LinearOpMode {
 
         //Place Pixel position = 2
         Trajectory centerSpike = drive.trajectoryBuilder(startPose, false)
-                .lineToSplineHeading(new Pose2d(-32.5,-38,Math.toRadians(-180)))
+                .lineToSplineHeading(new Pose2d(-32.5,-38,Math.toRadians(180)))
                 .build();
         //Move forward a bit
         Trajectory positionTwoForward = drive.trajectoryBuilder(centerSpike.end(), false)
@@ -141,20 +141,20 @@ public class RoadrunnerAutoFRONTSTAGE_BLUECORNER_A extends LinearOpMode {
                 robot.liftSlide(.5, 350, 1000);
                 drive.followTrajectory(leftSpike);
                 robot.liftSlide(.5,0,1000);
-                robot.rotateArm(1,1000);
+                robot.rotateArm(0,1000);
                 drive.followTrajectory(rightSpike);
                 robot.backClawClose(false,1000);
                 drive.followTrajectory(positionOneForward);
                 drive.followTrajectory(positionOneToRightCorner);
                 sleep(3000);
                 drive.followTrajectory(positionOneAlignBackdrop);
-                robot.liftSlide(.5,550,1000);
-                robot.rotateArm(.75,100);
+                robot.liftSlide(.5,650,1000);
+                robot.rotateArm(.34,100);
                 drive.followTrajectory(leftAprilTag);
                 robot.closeClaw(false,10);
                 drive.followTrajectory(positionOneBack);
                 robot.liftSlide(.5, 0, 2000);
-                robot.rotateArm(1,100);
+                robot.rotateArm(0,100);
                 drive.followTrajectory(positionOneCorner);
                 break;
             //CENTER SPIKE
@@ -163,18 +163,18 @@ public class RoadrunnerAutoFRONTSTAGE_BLUECORNER_A extends LinearOpMode {
                 drive.followTrajectory(centerSpike);
                 robot.backClawClose(false,1000);
                 robot.liftSlide(.5,0,1000);
-                robot.rotateArm(1,1000);
+                robot.rotateArm(0,1000);
                 drive.followTrajectory(positionTwoForward);
                 drive.followTrajectory(positionTwoToRightCorner);
                 sleep(3000);
                 drive.followTrajectory(positionTwoAlignBackdrop);
-                robot.liftSlide(.5,550,1000);
-                robot.rotateArm(.75,100);
+                robot.liftSlide(.5,650,1000);
+                robot.rotateArm(.34,100);
                 drive.followTrajectory(centerAprilTag);
                 robot.closeClaw(false,10);
                 drive.followTrajectory(positionTwoBack);
                 robot.liftSlide(.5, 0, 2000);
-                robot.rotateArm(1,100);
+                robot.rotateArm(0,100);
                 drive.followTrajectory(positionTwoCorner);
                 break;
             //RIGHT SPIKE
@@ -183,18 +183,18 @@ public class RoadrunnerAutoFRONTSTAGE_BLUECORNER_A extends LinearOpMode {
                 drive.followTrajectory(leftSpike);
                 robot.backClawClose(false,1000);
                 robot.liftSlide(.5,0,1000);
-                robot.rotateArm(1,1000);
+                robot.rotateArm(0,1000);
                 drive.followTrajectory(positionThreeForward);
                 drive.followTrajectory(positionThreeToRightCorner);
                 sleep(3000);
                 drive.followTrajectory(positionThreeAlignBackdrop);
-                robot.liftSlide(.5,550,1000);
-                robot.rotateArm(.75,100);
+                robot.liftSlide(.5,650,1000);
+                robot.rotateArm(.34,100);
                 drive.followTrajectory(rightAprilTag);
                 robot.closeClaw(false,10);
                 drive.followTrajectory(positionThreeBack);
                 robot.liftSlide(.5, 0, 2000);
-                robot.rotateArm(1,100);
+                robot.rotateArm(0,100);
                 drive.followTrajectory(positionThreeCorner);
                 break;
             //TEST CASE
