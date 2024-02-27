@@ -42,7 +42,7 @@ public class RoadrunnerAutoFRONTSTAGE_REDCENTER_A extends LinearOpMode {
                 .build();
         //Place APRILTAG position = 3
         Trajectory rightAprilTag = drive.trajectoryBuilder(positionThreeAlignBackdrop.end(), false)
-                .lineToSplineHeading(new Pose2d(30,49,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(30,48,Math.toRadians(90)))
                 .build();
         //Back up position 3
         Trajectory positionThreeBack = drive.trajectoryBuilder(rightAprilTag.end(), false)
@@ -75,7 +75,7 @@ public class RoadrunnerAutoFRONTSTAGE_REDCENTER_A extends LinearOpMode {
                 .build();
         //Place APRILTAG position = 2
         Trajectory centerAprilTag = drive.trajectoryBuilder(positionTwoAlignBackdrop.end(), false)
-                .lineToSplineHeading(new Pose2d(36,49,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(36,48,Math.toRadians(90)))
                 .build();
         //Back up position 2
         Trajectory positionTwoBack = drive.trajectoryBuilder(centerAprilTag.end(), false)
@@ -108,7 +108,7 @@ public class RoadrunnerAutoFRONTSTAGE_REDCENTER_A extends LinearOpMode {
                 .build();
         //Place APRILTAG position = 1
         Trajectory leftAprilTag = drive.trajectoryBuilder(positionOneAlignBackdrop.end(), false)
-                .lineToSplineHeading(new Pose2d(42,49.5,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(42,48,Math.toRadians(90)))
                 .build();
         //Back up position 1
         Trajectory positionOneBack = drive.trajectoryBuilder(leftAprilTag.end(), false)
@@ -121,11 +121,11 @@ public class RoadrunnerAutoFRONTSTAGE_REDCENTER_A extends LinearOpMode {
 
         //Robot closes both claws and reveals the huskylens
         robot.closeClaw(true,500);
-        robot.rotateArm(.4,1000);
         robot.backClawClose(true, 100);
 
         waitForStart();
         if(isStopRequested()) return;
+        robot.rotateArm(.4,1000);
 
         //When OpMode starts, run husky lens with the loop and leave once it returns anything other than 0
         while(pixelPosition == 0)

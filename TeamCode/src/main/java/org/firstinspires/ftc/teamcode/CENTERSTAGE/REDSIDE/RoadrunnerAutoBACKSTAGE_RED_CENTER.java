@@ -26,7 +26,7 @@ public class RoadrunnerAutoBACKSTAGE_RED_CENTER extends LinearOpMode {
 
         //Place Pixel position = 3
         Trajectory leftSpike = drive.trajectoryBuilder(startPose, false)
-                .lineToSplineHeading(new Pose2d(34,30,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(33,30,Math.toRadians(90)))
                 .build();
         //Place APRILTAG position = 3
         Trajectory leftAprilTag = drive.trajectoryBuilder(leftSpike.end(), false)
@@ -108,9 +108,9 @@ public class RoadrunnerAutoBACKSTAGE_RED_CENTER extends LinearOpMode {
                 drive.followTrajectory(rightAprilTag);
                 robot.closeClaw(false,100);
                 drive.followTrajectory(positionThreeBack);
-                drive.followTrajectory(positionThreeParkCenter);
                 robot.liftSlide(.5, 0, 1000);
                 robot.rotateArm(0,100);
+                drive.followTrajectory(positionThreeParkCenter);
                 break;
             //CENTER SPIKE
             case 2:
@@ -121,9 +121,9 @@ public class RoadrunnerAutoBACKSTAGE_RED_CENTER extends LinearOpMode {
                 drive.followTrajectory(centerAprilTag);
                 robot.closeClaw(false,100);
                 drive.followTrajectory(positionTwoBack);
-                drive.followTrajectory(positionTwoParkCenter);
                 robot.liftSlide(.5, 0, 1000);
                 robot.rotateArm(0,100);
+                drive.followTrajectory(positionTwoParkCenter);
                 break;
             //RIGHT SPIKE
             case 3:
@@ -134,9 +134,9 @@ public class RoadrunnerAutoBACKSTAGE_RED_CENTER extends LinearOpMode {
                 drive.followTrajectory(leftAprilTag);
                 robot.closeClaw(false,100);
                 drive.followTrajectory(positionOneBack);
-                drive.followTrajectory(positionOneParkCenter);
                 robot.liftSlide(.5, 0, 1000);
                 robot.rotateArm(0,100);
+                drive.followTrajectory(positionOneParkCenter);
                 break;
             //TEST CASE
             case 4:

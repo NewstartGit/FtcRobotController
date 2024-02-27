@@ -121,8 +121,8 @@ public class RoadrunnerAutoFRONTSTAGE_BLUECORNER_A extends LinearOpMode {
 
         //Robot closes both claws and reveals the huskylens
         robot.closeClaw(true,500);
-        robot.rotateArm(.4,1000);
         robot.backClawClose(true, 100);
+        robot.rotateArm(.4,1000);
 
         waitForStart();
         if(isStopRequested()) return;

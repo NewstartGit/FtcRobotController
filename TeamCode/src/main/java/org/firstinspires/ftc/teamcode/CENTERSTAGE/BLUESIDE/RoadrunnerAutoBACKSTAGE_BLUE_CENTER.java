@@ -30,7 +30,7 @@ public class RoadrunnerAutoBACKSTAGE_BLUE_CENTER extends LinearOpMode {
                 .build();
         //Place APRILTAG position = 1
         Trajectory leftAprilTag = drive.trajectoryBuilder(leftSpike.end(), false)
-                .lineToSplineHeading(new Pose2d(-44,50,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(-44,49,Math.toRadians(90)))
                 .build();
         //Back up position 1
         Trajectory positionOneBack = drive.trajectoryBuilder(leftAprilTag.end(), false)
@@ -48,7 +48,7 @@ public class RoadrunnerAutoBACKSTAGE_BLUE_CENTER extends LinearOpMode {
                 .build();
         //Place APRILTAG position = 2
         Trajectory centerAprilTag = drive.trajectoryBuilder(centerSpike.end(), false)
-                .lineToSplineHeading(new Pose2d(-36,50,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(-36,48.5,Math.toRadians(90)))
                 .build();
         //Back up position 2
         Trajectory positionTwoBack = drive.trajectoryBuilder(centerAprilTag.end(), false)
@@ -66,7 +66,7 @@ public class RoadrunnerAutoBACKSTAGE_BLUE_CENTER extends LinearOpMode {
                 .build();
         //Place APRILTAG position = 3
         Trajectory rightAprilTag = drive.trajectoryBuilder(rightSpike.end(), false)
-                .lineToSplineHeading(new Pose2d(-30,50,Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(-30,48.5,Math.toRadians(90)))
                 .build();
         //Back up position 3
         Trajectory positionThreeBack = drive.trajectoryBuilder(rightAprilTag.end(), false)

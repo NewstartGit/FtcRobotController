@@ -85,11 +85,12 @@ public class RoadrunnerAutoFRONTSTAGE_BLUECORNER_A_PARKONLY extends LinearOpMode
 
         //Robot closes both claws and reveals the huskylens
         robot.closeClaw(true,500);
-        robot.rotateArm(.4,1000);
         robot.backClawClose(true, 100);
 
         waitForStart();
         if(isStopRequested()) return;
+        robot.rotateArm(.4,1000);
+
 
         //When OpMode starts, run husky lens with the loop and leave once it returns anything other than 0
         while(pixelPosition == 0)
